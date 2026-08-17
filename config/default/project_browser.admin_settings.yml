@@ -1,0 +1,7 @@
+default_source: recommended
+enabled_sources:
+  recommended: {  }
+  drupalorg_jsonapi: {  }
+  recipes: {  }
+allow_ui_install: true
+max_selections: 1

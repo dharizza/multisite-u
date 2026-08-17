@@ -1,0 +1,14 @@
+uuid: bfe205a2-c7fa-4c04-bc69-8edad3e8fafa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - trash
+_core:
+  default_config_hash: IKqmNMqpTJUXLgQdkvJgTKSgKeyhc2LtXRHCtu7EIwk
+id: node_purge_action
+label: 'Permanently delete content item'
+type: node
+plugin: 'entity:purge_action:node'
+configuration: {  }

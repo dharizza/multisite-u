@@ -1,0 +1,21 @@
+uuid: 52181475-3a39-47af-8575-13c7d02b71e1
+langcode: en
+status: true
+dependencies:
+  module:
+    - campus_greeting
+  theme:
+    - claro
+id: claro_campusgreeting
+theme: claro
+region: content
+weight: -2
+provider: null
+plugin: campus_greeting_block
+settings:
+  id: campus_greeting_block
+  label: 'Campus Greeting'
+  label_display: visible
+  provider: campus_greeting
+  greeting_message: 'Bienvenido al campus'
+visibility: {  }
