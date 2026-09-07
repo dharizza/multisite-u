@@ -1,0 +1,61 @@
+.tarjeta-enlace {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+}
+
+.tarjeta-enlace.color--azul {
+  background-color: blue;
+}
+.tarjeta-enlace.color--amarillo {
+  background-color: yellow;
+}
+.tarjeta-enlace.color--verde {
+  background-color: green;
+}
+.tarjeta-enlace.color--rojo {
+  background-color: red;
+}
+
+.imgs-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: 0.8;
+  margin: 0;
+  aspect-ratio: 4/3;
+}
+
+.imgs-avatar img:hover,
+.imgs-avatar img:focus {
+  opacity: 0.6;
+}
+
+.texto-encima {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  font-size: 1.5vw;
+  text-align: left;
+  line-height: 1;
+  color: #FFFFFF;
+}
+
+a.texto-encima:hover,
+a.texto-encima:focus {
+  color: white;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .texto-encima {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    font-size: 7vw;
+    text-align: left;
+    line-height: 0.8;
+  }
+}

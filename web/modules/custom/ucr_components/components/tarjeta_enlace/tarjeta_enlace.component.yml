@@ -1,0 +1,41 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: tarjeta_enlace
+status: stable
+props:
+  type: object
+  properties:
+    texto:
+      type: string
+      title: Texto
+      examples:
+        - 'Proyectos de Investigación'
+    imagen:
+      $ref: json-schema-definitions://canvas.module/image
+      type: object
+      title: Imagen
+      examples:
+        - src: https://placehold.co/1920x1080
+          alt: ""
+          width: 1920
+          height: 1080
+    url:
+      type: string
+      format: uri-reference
+      title: URL
+      examples:
+        - https://google.com
+    abrir_en_otro_tab:
+      type: boolean
+      title: Abrir en otro tab
+      examples:
+        - false
+    color_default:
+      type: string
+      title: Color default
+      enum:
+        - azul
+        - amarillo
+        - verde
+        - rojo
+      examples:
+        - rojo

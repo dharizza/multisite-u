@@ -1,0 +1,21 @@
+<div {{ attributes }}>
+  {% if abrir_en_otro_tab == true %}
+    <a class="tarjeta-enlace color--{{ color_default }}" href="{{ url }}" target="_blank">
+      {% if imagen %}
+        <div class="imgs-avatar">
+          {% include 'canvas:image' with imagen only %}
+        </div>
+      {% endif %}
+      <p class="texto-encima">{{ texto }}</p>
+    </a>
+  {% else %}
+    <a class="tarjeta-enlace color--{{ color_default }}" href="{{ url }}">
+      {% if imagen %}
+        <div class="imgs-avatar">
+          {% include 'canvas:image' with imagen only %}
+        </div>
+      {% endif %}
+      <p class="texto-encima">{{ texto }}</p>
+    </a>
+  {% endif %}
+</div>

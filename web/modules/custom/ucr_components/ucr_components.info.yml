@@ -1,0 +1,5 @@
+name: 'ucr_components'
+type: module
+description: 'SDCs for UCR design system'
+package: Custom
+core_version_requirement: ^10 || ^11
