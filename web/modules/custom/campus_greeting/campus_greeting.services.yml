@@ -1,0 +1,14 @@
+services:
+  campus_greeting.visit_counter:
+    class: Drupal\campus_greeting\VisitCounter
+    arguments: ['@state']
+
+  campus_greeting.event_subscriber:
+    class: Drupal\campus_greeting\EventSubscriber\CampusGreetingSubscriber
+    arguments: ['@campus_greeting.visit_counter']
+    tags:
+      - { name: event_subscriber }
+
+  plugin.manager.campus_greeting:
+    class: Drupal\campus_greeting\CampusGreetingPluginManager
+    parent: default_plugin_manager

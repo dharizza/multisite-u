@@ -1,0 +1,7 @@
+block.settings.campus_greeting_prueba:
+  type: block_settings
+  label: 'Prueba block'
+  mapping:
+    example:
+      type: string
+      label: Example

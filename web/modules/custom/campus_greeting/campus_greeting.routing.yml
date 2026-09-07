@@ -1,0 +1,8 @@
+campus_greeting.sources_api:
+  path: '/api/campus-greeting/sources'
+  defaults:
+    _title: 'Sources API'
+    _controller: '\Drupal\campus_greeting\Controller\GreetingSourcesController::list'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
