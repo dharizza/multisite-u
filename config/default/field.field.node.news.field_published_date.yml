@@ -1,0 +1,23 @@
+uuid: d447918d-6fcc-489e-90ff-f9512c9cab39
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_published_date
+    - node.type.news
+_core:
+  default_config_hash: qM6w5Pf1-QNWyVl3zX-YYTCWSZSMJRijwdmontcf49A
+id: node.news.field_published_date
+field_name: field_published_date
+entity_type: node
+bundle: news
+label: 'Published Date'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 1786988647
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

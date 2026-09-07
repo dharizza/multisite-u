@@ -1,0 +1,23 @@
+uuid: 56b4b388-80ae-46c1-9500-4472c6665ef0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: R_Xa6ZmY1uqeVBErIEbpyWizgNwe5PjZ4XYNxizmx-A
+id: node.field_badge
+field_name: field_badge
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

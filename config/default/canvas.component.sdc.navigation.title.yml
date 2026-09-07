@@ -1,12 +1,12 @@
-uuid: 0ef56f26-7742-4314-b017-4e98aec0b4fe
+uuid: 5bd46c9d-7347-46e0-bc7c-03340189fb1b
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - navigation
     - options
 _core:
-  default_config_hash: crLWFcQ_6H9RrahZ73nVhGnOrfA8soIz3GgKEktiABk
+  default_config_hash: kUcUJb1FSBWDoj4y3vcQ9aTiEyaVM6uxtDmgUg3XKuk
 active_version: f7072e7d10fc2cb1
 versioned_properties:
   active:

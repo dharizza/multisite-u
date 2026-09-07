@@ -1,11 +1,11 @@
-uuid: 48867187-eed5-4b63-ac56-0e3beaa5445f
+uuid: 14acef5c-26b6-47d7-a84c-9cdb64a202a0
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - drupical
 _core:
-  default_config_hash: 4SvjInRBxF4Yc2HrBHUq0R-_rN1LTYeATI5O-RSz4d8
+  default_config_hash: BVcklj6e4OtLjI35EHHAnvPag_26cImMaltq1fDssiE
 active_version: 7f0d7c64a7196c20
 versioned_properties:
   active:

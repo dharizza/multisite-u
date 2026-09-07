@@ -1,11 +1,11 @@
-uuid: 8713d8ab-c8d5-4daf-a48f-da05d8f8ea22
+uuid: 0f9e91ce-ca98-41d2-a351-a737b049bd17
 langcode: en
 status: true
 dependencies:
   module:
     - node
 _core:
-  default_config_hash: bcDKg5FvA9QXElBvRi4X60jXV9k9_MdiDu8nT2prisY
+  default_config_hash: m-a2LUHptfRoh6Bpm6Tqewk6RI4bBLHSf1jhBpfPqHY
 id: menu_path
 label: 'Menu Path'
 type: 'canonical_entities:node'

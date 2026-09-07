@@ -1,4 +1,4 @@
-uuid: b5f2aa97-fe2b-4de2-8ef5-a385b8871af9
+uuid: cdb1fd28-7f4f-4cdb-a825-d676e890a4de
 langcode: en
 status: true
 dependencies:
@@ -9,7 +9,7 @@ dependencies:
   module:
     - svg_image
 _core:
-  default_config_hash: N5TTx2k2BPM5T-8fBhE6USQiYhk1TrGMz5ffx33WiaY
+  default_config_hash: QKYNiGMAukqpiyOJQs0tBDLneRuS05KWC7uktUsQg_o
 id: media.svg_image.medium
 targetEntityType: media
 bundle: svg_image
@@ -33,5 +33,6 @@ content:
 hidden:
   created: true
   name: true
+  search_api_excerpt: true
   thumbnail: true
   uid: true

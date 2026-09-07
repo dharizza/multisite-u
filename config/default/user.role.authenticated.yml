@@ -1,13 +1,17 @@
-uuid: c958a2a5-a0d3-4f13-841f-bf5b25e212d6
+uuid: 48c614a5-8e17-4378-9f1c-1973208f42a8
 langcode: en
 status: true
 dependencies:
+  config:
+    - dashboard.dashboard.welcome
+    - filter.format.webform_default
   module:
     - captcha
     - coffee
     - contextual
-    - editoria11y
+    - dashboard
     - file
+    - filter
     - honeypot
     - klaro
     - media
@@ -28,10 +32,10 @@ permissions:
   - 'access navigation'
   - 'bypass honeypot protection'
   - 'delete own files'
-  - 'mark as hidden in editoria11y'
   - 'skip CAPTCHA'
   - 'use klaro'
-  - 'view editoria11y checker'
+  - 'use text format webform_default'
   - 'view media'
   - 'view own unpublished content'
   - 'view the administration theme'
+  - 'view welcome dashboard'

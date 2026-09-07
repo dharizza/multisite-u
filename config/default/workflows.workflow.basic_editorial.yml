@@ -1,13 +1,16 @@
-uuid: 85d0abaa-6cbf-460c-9612-bdf1cc75c0fc
+uuid: 1c912a17-2d55-477e-8a6b-8e29a65be19d
 langcode: en
 status: true
 dependencies:
   config:
+    - node.type.blog
     - node.type.page
+    - node.type.person_profile
+    - node.type.project
   module:
     - content_moderation
 _core:
-  default_config_hash: jgHGSmFwMs65r6dnL-g6tY3pvKMBmMgU1sDTnOu7Wsc
+  default_config_hash: v_g32GD6kM3zf4fKqvg_Nu8fTKxDEATQ7CFWKSKEBzA
 id: basic_editorial
 label: Basic
 type: content_moderation
@@ -53,5 +56,8 @@ type_settings:
       weight: 1
   entity_types:
     node:
+      - blog
       - page
+      - person_profile
+      - project
   default_moderation_state: draft

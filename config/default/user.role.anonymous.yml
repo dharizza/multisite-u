@@ -1,4 +1,4 @@
-uuid: af5e6379-247f-491a-8bcd-b490e98eaa1e
+uuid: a9c825f4-f0f7-490c-b48b-67b563bcf92a
 langcode: en
 status: true
 dependencies:
@@ -15,4 +15,5 @@ is_admin: false
 permissions:
   - 'access content'
   - 'use klaro'
+  - 'view media'
   - 'view media'

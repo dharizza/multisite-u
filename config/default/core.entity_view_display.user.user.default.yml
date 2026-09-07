@@ -1,18 +1,15 @@
-uuid: eec3b74d-ab68-409d-baf2-c6ba8fdd1ffe
+uuid: a5090b99-a178-4da5-8194-4fda99c54087
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_last_password_reset
-    - field.field.user.user.field_password_expiration
-    - field.field.user.user.field_pending_expire_sent
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
     - svg_image
     - user
 _core:
-  default_config_hash: p6XT7S3IOttCei-bnEKmA4fDXjQwv_r0hon6pG0DTTg
+  default_config_hash: nGKdlTaURKHQ8PW87F_t2qdSrEh2cQt0DTpBpcj6wqU
 id: user.user.default
 targetEntityType: user
 bundle: user
@@ -37,6 +34,4 @@ content:
     weight: 0
     region: content
 hidden:
-  field_last_password_reset: true
-  field_password_expiration: true
-  field_pending_expire_sent: true
+  search_api_excerpt: true

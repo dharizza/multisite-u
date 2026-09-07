@@ -1,0 +1,72 @@
+uuid: 63209e2e-7052-4275-a607-0a2a40609299
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.news.field_author
+    - field.field.node.news.field_body
+    - field.field.node.news.field_image
+    - field.field.node.news.field_keywords
+    - field.field.node.news.field_published_date
+    - field.field.node.news.field_seo_analysis
+    - field.field.node.news.field_seo_description
+    - field.field.node.news.field_seo_image
+    - field.field.node.news.field_seo_title
+    - node.type.news
+  module:
+    - layout_builder
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+_core:
+  default_config_hash: BW07mAO7TgTSFDer9FElvUYwT6BwKYc7Gd1sZ3fJzpg
+id: node.news.teaser
+targetEntityType: node
+bundle: news
+mode: teaser
+content:
+  field_body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 300
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_published_date:
+    type: timestamp
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_author: true
+  field_image: true
+  field_keywords: true
+  field_seo_analysis: true
+  field_seo_description: true
+  field_seo_image: true
+  field_seo_title: true
+  search_api_excerpt: true

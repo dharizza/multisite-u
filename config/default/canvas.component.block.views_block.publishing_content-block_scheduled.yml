@@ -1,13 +1,13 @@
-uuid: 9671b811-7926-45fb-a3b1-821af1f56345
+uuid: 3962a850-0e2b-47b4-8dfe-023e39982d09
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - views.view.publishing_content
   module:
     - views
 _core:
-  default_config_hash: _2QUwuyBv_Ou149MAedJPml8YZhIzp3FxdRESojW_lA
+  default_config_hash: EzJkLjic-AzTOP9kjLCEvvI7cCo_bG8QsTa4GblEckY
 active_version: 3ddcc9429928c501
 versioned_properties:
   active:

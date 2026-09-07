@@ -1,9 +1,10 @@
-uuid: b626a1ab-5e4d-4bce-9011-862d3da31081
+uuid: 10a4f5f9-aa33-4bc0-b983-e363c1d5c5b9
 langcode: en
 status: true
 dependencies:
   module:
     - scheduler
+    - search_api_exclude
 third_party_settings:
   scheduler:
     expand_fieldset: when_required
@@ -18,8 +19,10 @@ third_party_settings:
     unpublish_enable: true
     unpublish_required: false
     unpublish_revision: true
+  search_api_exclude:
+    enabled: true
 _core:
-  default_config_hash: w3rV7HxskfgdLnh-hDIIBuBip8QaVG-WDYKpYeMf4RY
+  default_config_hash: BwcBVE6CQPYp0Dk3UgK-E4vCvH6Bj1kDWLYZFsel4hI
 name: 'Utility page'
 type: page
 description: "Use <em>utility page</em> for your static content, such as a 'Privacy policy' page."

@@ -1,9 +1,9 @@
-uuid: a1564370-efdb-446a-8bd3-2524a25fb6ed
+uuid: 2646167b-2d24-4959-ae3d-47f6447a89da
 langcode: en
 status: false
 dependencies: {  }
 _core:
-  default_config_hash: RUmyclekk7Arw4Nrkw4R7m6mW7D_bDVqxMR2x3SE8a8
+  default_config_hash: sgtHZkp2NIYqj5aqIRW8YSHwaRY7RQTbcettLQWbcV0
 active_version: 9eea215a62e33427
 versioned_properties:
   active:

@@ -1,4 +1,4 @@
-uuid: 98b83b15-cc24-417a-a2e6-f4d3f47d75d2
+uuid: f894c1a7-7e14-45a9-a4ca-9ed89281bdcd
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
     config:
       - node.type.page
 _core:
-  default_config_hash: zBTMdXYtYnXmERHcELRA1YtayvVbh7GI0BFd2lTNpN8
+  default_config_hash: Az-29SzQ1P00acJRPxlkJ-v6J90IKMryyukiLXl8e2U
 id: page_content
 label: 'Page content'
 type: 'canonical_entities:node'
@@ -23,6 +23,7 @@ selection_criteria:
       node: node
     bundles:
       page: page
+    uuid: 425d6456-71e3-4b65-9302-6c695efaab28
 selection_logic: and
 weight: -5
 relationships: {  }

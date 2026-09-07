@@ -1,11 +1,11 @@
-uuid: 4af2983c-5494-4aa5-82eb-08c71db1b4db
+uuid: f281a3bd-f2ad-419a-9f5a-fc988f8b9412
 langcode: en
 status: true
 dependencies:
   module:
     - system
 _core:
-  default_config_hash: yvNytKOUUNtngAFDEqNIqJ6WJ5hH3UHSG4pIgOesO7s
+  default_config_hash: Eg-HY0KaJci_CGXsJSFiy5mzxs-eE_cBG8Us7NZDEAw
 active_version: 5d275553b2355691
 versioned_properties:
   active:

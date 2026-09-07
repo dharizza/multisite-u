@@ -1,4 +1,4 @@
-uuid: 1eb98bb2-115d-4dfd-b914-c4438b65e2d9
+uuid: 46690112-797f-4808-b799-7d9f7efa687e
 langcode: en
 status: true
 dependencies:
@@ -8,7 +8,7 @@ dependencies:
   module:
     - file
 _core:
-  default_config_hash: _Ijpy91FdjhX4xVH3UY70PrzpqJghTgCyzoYyxMnqC0
+  default_config_hash: qEYy7ic60Z2fFQSbH6Sh-czzHf4ZoTE7d-x9kirsX68
 id: media.video.default
 targetEntityType: media
 bundle: video
@@ -32,5 +32,6 @@ content:
 hidden:
   created: true
   name: true
+  search_api_excerpt: true
   thumbnail: true
   uid: true

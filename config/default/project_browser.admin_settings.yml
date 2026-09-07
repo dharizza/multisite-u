@@ -1,4 +1,4 @@
-default_source: recommended
+default_source: drupalorg_jsonapi
 enabled_sources:
   recommended: {  }
   drupalorg_jsonapi: {  }

@@ -1,11 +1,11 @@
-uuid: 523e4603-8de8-4120-8ae1-d1c94f6591a5
+uuid: fd237f1e-0327-4a17-9cd2-b0c98e2d8a33
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - project_browser
 _core:
-  default_config_hash: yb-R_q6bTClEoU4_FB4G7sZ9TwdBYhUugc2rAZdgg5c
+  default_config_hash: UysclpuTyDVrs6yqNiPAJ-6J2juH5_oz2AeK6kwPXFA
 active_version: 9eba06ccb21f6648
 versioned_properties:
   active:

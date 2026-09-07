@@ -1,0 +1,88 @@
+uuid: 5064e39b-204d-4e1c-9540-0ea098f7b49a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.news.field_author
+    - field.field.node.news.field_body
+    - field.field.node.news.field_image
+    - field.field.node.news.field_keywords
+    - field.field.node.news.field_published_date
+    - field.field.node.news.field_seo_analysis
+    - field.field.node.news.field_seo_description
+    - field.field.node.news.field_seo_image
+    - field.field.node.news.field_seo_title
+    - node.type.news
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: 5RwF7rlurxReN6pCQ_AhL1N34JYHBFLcIv6nxE63xfI
+id: node.news.default
+targetEntityType: node
+bundle: news
+mode: default
+content:
+  field_author:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_keywords:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_published_date:
+    type: timestamp
+    label: inline
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_seo_analysis: true
+  field_seo_description: true
+  field_seo_image: true
+  field_seo_title: true
+  search_api_excerpt: true

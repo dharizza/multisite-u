@@ -1,0 +1,21 @@
+uuid: 8eb8f79f-852f-4f7a-a342-62974795b05c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+_core:
+  default_config_hash: vfCDd178Qu0xIptj8ki3-eozhb4HTrhmGfZEU5mwFO0
+id: node.field_sidebar
+field_name: field_sidebar
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

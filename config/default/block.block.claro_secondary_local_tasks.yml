@@ -1,4 +1,4 @@
-uuid: 6b18ff5e-1a74-48b1-a4a3-f2f721fdacf1
+uuid: 39bd2b70-896f-4dd9-a90f-673d6c3077ca
 langcode: en
 status: true
 dependencies:
@@ -9,7 +9,7 @@ _core:
 id: claro_secondary_local_tasks
 theme: claro
 region: pre_content
-weight: -4
+weight: 0
 provider: null
 plugin: local_tasks_block
 settings:

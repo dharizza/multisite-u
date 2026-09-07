@@ -1,4 +1,4 @@
-uuid: 8d930c70-ba2c-4887-970f-3f0735539a29
+uuid: f98c2e4f-7986-4117-9727-cc98357f366a
 langcode: en
 status: false
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
   module:
     - system
 _core:
-  default_config_hash: '-SoVmdaz3Y1wCQcA9tbzIKkZv61eDN6xLIbw3lXf-6A'
+  default_config_hash: pNOlyNfBx_w1gCbNFa2NaIPC3RLvtQEqt7onyvTtsLk
 active_version: ee4bc7d55cd804f0
 versioned_properties:
   active:

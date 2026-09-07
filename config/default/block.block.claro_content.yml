@@ -1,4 +1,4 @@
-uuid: e7020261-79e2-4212-9cb9-5e6bd0b0ae7a
+uuid: e8763f87-dd0b-4162-b08d-f66539140cf4
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: claro_content
 theme: claro
 region: content
-weight: -1
+weight: 0
 provider: null
 plugin: system_main_block
 settings:

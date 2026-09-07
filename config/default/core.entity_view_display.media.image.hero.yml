@@ -1,4 +1,4 @@
-uuid: d4578707-c591-4ba5-ba30-d5db5d61229b
+uuid: 6725694f-95e5-4b1d-b2b2-6892a3c92664
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
   module:
     - responsive_image
 _core:
-  default_config_hash: EIMkwAHwha5YQ-wbKdjQiekLhKmFfa7UeB3TfRL4Hio
+  default_config_hash: f2fgm9F1nHW8P_9QgwFzj6ou4PVFhFeZKB5WE-UY33U
 id: media.image.hero
 targetEntityType: media
 bundle: image
@@ -30,5 +30,6 @@ content:
 hidden:
   created: true
   name: true
+  search_api_excerpt: true
   thumbnail: true
   uid: true

@@ -1,4 +1,4 @@
-uuid: 7bcf64df-656a-4216-8bdd-c132e582d46c
+uuid: e88cf270-9f23-49d5-8d42-b89dab7abebd
 langcode: en
 status: false
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
   module:
     - views
 _core:
-  default_config_hash: xdoga3ECsxdfSIx_KY94SNyT63Bai46GGJe7W74aiCI
+  default_config_hash: a_9waBsvMHdgagHk_PYugZHQx6io8tL4Zbj6F21kDNk
 active_version: a620043a9562c243
 versioned_properties:
   active:

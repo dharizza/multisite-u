@@ -1,4 +1,4 @@
-uuid: 8c814cfa-c30c-4dec-85ae-afba3dd871b1
+uuid: 44449e7b-b678-42fa-a5d4-483a944f1089
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
   module:
     - responsive_image
 _core:
-  default_config_hash: ZrtJU30op7GQ0RhwpTKGuWPZxHWU5ii7VBBvdLmL30A
+  default_config_hash: KRptjlbDY5TV0-FRKVwWy27Cl_G-yulJiYQnEc-9edE
 id: media.image.1_1_square_medium
 targetEntityType: media
 bundle: image
@@ -30,5 +30,6 @@ content:
 hidden:
   created: true
   name: true
+  search_api_excerpt: true
   thumbnail: true
   uid: true

@@ -1,15 +1,11 @@
-uuid: 994307f3-210c-45cb-950e-b8ee23d73f4f
+uuid: fad64404-f6d8-4441-acec-ee9754304c41
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_last_password_reset
-    - field.field.user.user.field_password_expiration
-    - field.field.user.user.field_pending_expire_sent
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
-    - datetime
     - path
     - svg_image
     - user
@@ -23,19 +19,6 @@ content:
   account:
     weight: -10
     region: content
-  field_last_password_reset:
-    type: datetime_default
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_password_expiration:
-    type: boolean_checkbox
-    weight: 3
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   language:
     weight: 0
     region: content
@@ -56,5 +39,4 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-hidden:
-  field_pending_expire_sent: true
+hidden: {  }

@@ -1,4 +1,4 @@
-uuid: 828ac380-aea3-4a09-ab7a-1819c13090f7
+uuid: 94bc2b32-6c16-4f51-a342-8d7ce153fa46
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
   module:
     - svg_image
 _core:
-  default_config_hash: oIA2F5w-p2S-um0nr3UJwvjLYP8dUylHDj9Aep9HALE
+  default_config_hash: UFGLCNeH_3GSTLsT7Uog_jfct7Njp4z1gSPMRbULx3A
 id: media.video.media_library
 targetEntityType: media
 bundle: video
@@ -31,4 +31,5 @@ hidden:
   created: true
   field_media_video_file: true
   name: true
+  search_api_excerpt: true
   uid: true
