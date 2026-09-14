@@ -1,0 +1,73 @@
+uuid: 3fb6c38e-781c-4a00-9d51-2f261c11249b
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.sdc.haven_theme.grid
+    - canvas.component.sdc.haven_theme.image
+    - canvas.component.sdc.haven_theme.text
+    - filter.format.canvas_html_block
+  module:
+    - options
+    - text
+id: testgridimagetext
+label: 'Test grid image + text'
+component_tree:
+  '0:4ca9fb87-b2c0-4ee2-8e55-714ae8805e3e':
+    uuid: 4ca9fb87-b2c0-4ee2-8e55-714ae8805e3e
+    component_id: sdc.haven_theme.grid
+    component_version: 0a5595fef10a7122
+    inputs:
+      width: 100%
+      columns: '2 columns'
+      mobile_columns: '1'
+      reverse_mobile: false
+  '0:main_slot:0:0808cde0-baf9-477a-a481-e63590f0c3b3':
+    parent_uuid: 4ca9fb87-b2c0-4ee2-8e55-714ae8805e3e
+    slot: main_slot
+    uuid: 0808cde0-baf9-477a-a481-e63590f0c3b3
+    component_id: sdc.haven_theme.image
+    component_version: d77451010df91d0e
+    inputs:
+      media:
+        sourceType: default-relative-url
+        value:
+          src: assets/rabih-shasha-tTv6Lo5uQVQ-unsplash.jpg
+          alt: 'A row of windmills on a deserted plain with'
+          width: 1920
+          height: 1438
+        jsonSchema:
+          type: object
+          properties:
+            src:
+              type: string
+              contentMediaType: 'image/*'
+              format: uri-reference
+              x-allowed-schemes:
+                - http
+                - https
+            alt:
+              type: string
+            width:
+              type: integer
+            height:
+              type: integer
+          required:
+            - src
+        componentId: sdc.haven_theme.image
+      size: '3:2'
+      radius: extra-large
+      caption: Caption
+  '0:main_slot:1:1643edbb-b225-4b9e-aa20-09fee3988a36':
+    parent_uuid: 4ca9fb87-b2c0-4ee2-8e55-714ae8805e3e
+    slot: main_slot
+    uuid: 1643edbb-b225-4b9e-aa20-09fee3988a36
+    component_id: sdc.haven_theme.text
+    component_version: 75c8d6e04ca4b729
+    inputs:
+      text:
+        value: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tristique pretium pellentesque semper enim aliquam.</p>'
+        format: canvas_html_block
+      text_size: text-2xl
+      text_color: primary
+      columns: '1 column'

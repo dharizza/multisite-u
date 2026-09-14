@@ -1,0 +1,23 @@
+uuid: 14040b3d-804d-443e-ab3b-8c490b066b80
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_time
+    - node.type.event
+  module:
+    - datetime
+_core:
+  default_config_hash: xVo2zUMdZFtOJY1s2lNw574_FyD23E1Ltd8-rKAQFHw
+id: node.event.field_date_time
+field_name: field_date_time
+entity_type: node
+bundle: event
+label: 'Date and time'
+description: 'The date and time the event takes place.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

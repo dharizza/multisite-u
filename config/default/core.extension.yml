@@ -9,6 +9,7 @@ module:
   block: 0
   bpmn_io: 0
   breakpoint: 0
+  campus_greeting: 0
   canvas: 0
   captcha: 0
   checklistapi: 0
@@ -21,6 +22,7 @@ module:
   dashboard: 0
   datetime: 0
   dblog: 0
+  default_content: 0
   drupal_cms_helper: 0
   drupical: 0
   dynamic_page_cache: 0
@@ -98,6 +100,7 @@ module:
   token: 0
   token_or: 0
   trash: 0
+  ucr_components: 0
   ui_icons: 0
   ui_icons_field: 0
   ui_icons_menu: 0

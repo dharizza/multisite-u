@@ -1,0 +1,11 @@
+uuid: 8cb4d3ca-65bd-4665-aed7-4e571c9fe866
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.campus_greeting_block
+name: 'Campus Greeting'
+configEntityTypeId: component
+weight: 0
+items:
+  - block.campus_greeting_block
