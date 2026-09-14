@@ -47,6 +47,7 @@
         "drupal/crop": "^2.6.0",
         "drupal/cva": "^1.0.0",
         "drupal/dashboard": "^2.2.0",
+        "drupal/default_content": "^2-alpha",
         "drupal/drupal_cms_helper": "^2.1.2",
         "drupal/drupal_cms_installer": "^2",
         "drupal/drupical": "^1.0.2",
