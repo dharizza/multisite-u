@@ -148,7 +148,8 @@
         "enable-patching": true,
         "patches": {
             "drupal/config_split": {
-                "Add quick search to config item fields (#3623901)": "patches/config_split-add-search-in-config-fields-3623901-mr66.patch"
+                "Add quick search to config item fields (#3623901)": "patches/config_split-add-search-in-config-fields-3623901-mr66.patch",
+                "Fix label": "patches/config_split-fix-label.patch"
             }
         },
         "drupal-scaffold": {

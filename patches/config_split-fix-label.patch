@@ -1,0 +1,13 @@
+diff --git a/src/Form/ConfigSplitEntityForm.php b/src/Form/ConfigSplitEntityForm.php
+index e88a381..12c26bc 100644
+--- a/src/Form/ConfigSplitEntityForm.php
++++ b/src/Form/ConfigSplitEntityForm.php
+@@ -100,7 +100,7 @@ public function form(array $form, FormStateInterface $form_state) {
+       '#title' => $this->t('Label'),
+       '#maxlength' => 255,
+       '#default_value' => $config->label(),
+-      '#description' => $this->t("Label for the Configuration Split setting."),
++      '#description' => $this->t("Label for the Split Collection setting."),
+       '#required' => TRUE,
+     ];
+
