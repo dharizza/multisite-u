@@ -146,7 +146,11 @@
     },
     "extra": {
         "enable-patching": true,
-        "patches": [],
+        "patches": {
+            "drupal/config_split": {
+                "Add quick search to config item fields (#3623901)": "patches/config_split-add-search-in-config-fields-3623901-mr66.patch"
+            }
+        },
         "drupal-scaffold": {
             "locations": {
                 "web-root": "web/"

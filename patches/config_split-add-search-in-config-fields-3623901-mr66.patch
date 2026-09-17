@@ -1,0 +1,391 @@
+diff --git a/config_split.libraries.yml b/config_split.libraries.yml
+index b1c9d755136e2515ffd63b82543df7f210922085..c46664578e2e2b43a2770ca5eee38ba96c05e379 100644
+--- a/config_split.libraries.yml
++++ b/config_split.libraries.yml
+@@ -3,3 +3,10 @@ config-split-form:
+   css:
+     component:
+       css/config_split_form.css: {}
++  js:
++    js/config_split_form.js: {}
++  dependencies:
++    - core/drupal
++    - core/drupal.announce
++    - core/drupal.debounce
++    - core/once
+diff --git a/css/config_split_form.css b/css/config_split_form.css
+index 930047de5b8e7d2378d4c1939188760802ccd3a2..e2c6c8c50befb908a84167dfc51dd99f5b6fb706 100644
+--- a/css/config_split_form.css
++++ b/css/config_split_form.css
+@@ -11,3 +11,36 @@
+ .form-checkboxes input[type="checkbox"] {
+   vertical-align: middle;
+ }
++
++/* Filter input above each checkbox list. */
++.config-split-filter {
++  margin: 0 0 0.5rem;
++}
++
++.config-split-filter input {
++  width: 99%;
++  min-width: 300px;
++}
++
++.form-checkboxes .js-form-item.config-split-filter-hidden {
++  display: none;
++}
++
++/* Checked options, moved below the list so they stay in sight. They sit in a
++   .form-checkboxes of their own, so the two areas look the same. */
++.config-split-selected {
++  display: none;
++  margin: 0.5rem 0 0;
++}
++
++/* Only shown once the javascript has moved something into it. */
++.config-split-selected-filled {
++  display: block;
++}
++
++/* Everything selected is meant to be in sight, so this box grows with its
++   contents instead of scrolling like the list above it. */
++.config-split-selected-items {
++  overflow-y: visible;
++  height: auto;
++}
+diff --git a/js/config_split_form.js b/js/config_split_form.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..08c7b265a2ce636e6c06582b1079733441dea395
+--- /dev/null
++++ b/js/config_split_form.js
+@@ -0,0 +1,198 @@
++/**
++ * @file
++ * Filters the checkbox lists of the config split form by a search string.
++ */
++
++((Drupal, once, debounce) => {
++  /**
++   * Checks whether every word occurs in the text, in the order given.
++   *
++   * @param {string} haystack
++   *   The lower case text to search in.
++   * @param {Array.<string>} words
++   *   The lower case words to look for.
++   *
++   * @return {boolean}
++   *   True if all the words were found in order, false otherwise.
++   */
++  const matchesInOrder = (haystack, words) => {
++    let from = 0;
++    return words.every((word) => {
++      const found = haystack.indexOf(word, from);
++      if (found === -1) {
++        return false;
++      }
++      from = found + word.length;
++      return true;
++    });
++  };
++
++  /**
++   * Filters a list of checkboxes and keeps the checked ones in sight.
++   *
++   * Search input:   input.config-split-filter-text[data-config-split-filter]
++   * Target list:    [data-config-split-filter-target] .form-checkboxes
++   * Selected items: [data-config-split-selected] .config-split-selected-items
++   * Source text:    the label and the value of every checkbox in the list.
++   *
++   * The query is split on whitespace and every word has to appear, in the order
++   * they were typed, for an option to stay visible. That way "media library"
++   * finds "media_library" and "views taxonomy" finds
++   * "views.view.taxonomy_term" without having to type the separators.
++   *
++   * Checked options are moved out of the scrolling list into the area below it,
++   * which grows with its contents so that neither the scroll position nor the
++   * filter can hide them, and go back
++   * to their place in the list when they are unchecked. Both areas keep the
++   * order the options were rendered in. Moving an option keeps its checkbox
++   * inside the form, so what is submitted does not change.
++   *
++   * @type {Drupal~behavior}
++   *
++   * @prop {Drupal~behaviorAttach} attach
++   *   Attaches the behavior for filtering the split form checkbox lists.
++   */
++  Drupal.behaviors.configSplitFilterByText = {
++    attach(context) {
++      once(
++        'config-split-filter',
++        'input.config-split-filter-text',
++        context,
++      ).forEach((input) => {
++        const key = input.getAttribute('data-config-split-filter');
++        const fieldset = input.closest(
++          `[data-config-split-filter-target="${key}"]`,
++        );
++        // Both areas are styled as a checkbox list, so tell them apart by the
++        // class the selected one carries on top of it.
++        const list = fieldset
++          ? fieldset.querySelector(
++              '.form-checkboxes:not(.config-split-selected-items)',
++            )
++          : null;
++        const selected = fieldset
++          ? fieldset.querySelector(`[data-config-split-selected="${key}"]`)
++          : null;
++        const selectedItems = selected
++          ? selected.querySelector('.config-split-selected-items')
++          : null;
++
++        if (!list || !selectedItems) {
++          return;
++        }
++
++        const rows = Array.from(list.querySelectorAll('.js-form-item'));
++        rows.forEach((row, index) => {
++          row.dataset.configSplitWeight = index;
++        });
++
++        /**
++         * Moves an option into a container, keeping the order of the list.
++         *
++         * @param {HTMLElement} row
++         *   The form item of the option.
++         * @param {HTMLElement} parent
++         *   The container to move it into.
++         */
++        const insertInOrder = (row, parent) => {
++          if (row.parentElement === parent) {
++            return;
++          }
++          const weight = Number(row.dataset.configSplitWeight);
++          const next = rows.find(
++            (candidate) =>
++              candidate.parentElement === parent &&
++              Number(candidate.dataset.configSplitWeight) > weight,
++          );
++          parent.insertBefore(row, next || null);
++        };
++
++        /**
++         * Moves an option to the selected area or back to the list.
++         *
++         * @param {HTMLElement} row
++         *   The form item of the option.
++         */
++        const place = (row) => {
++          const checkbox = row.querySelector('input[type="checkbox"]');
++          insertInOrder(
++            row,
++            checkbox && checkbox.checked ? selectedItems : list,
++          );
++        };
++
++        /**
++         * Shows the options matching the query and hides the rest.
++         *
++         * The selected area is left alone: what is checked stays visible
++         * whatever is typed.
++         */
++        const filterList = () => {
++          const words = input.value
++            .trim()
++            .toLowerCase()
++            .split(/\s+/)
++            .filter(Boolean);
++          let visible = 0;
++
++          rows.forEach((row) => {
++            if (row.parentElement !== list) {
++              row.classList.remove('config-split-filter-hidden');
++              return;
++            }
++
++            const label = row.querySelector('label');
++            const checkbox = row.querySelector('input[type="checkbox"]');
++            // Match the human readable name and the machine name alike: for
++            // the module list the label holds one and the value the other.
++            const haystack = `${label ? label.textContent : ''} ${
++              checkbox ? checkbox.value : ''
++            }`.toLowerCase();
++            const match = matchesInOrder(haystack, words);
++
++            row.classList.toggle('config-split-filter-hidden', !match);
++            if (match) {
++              visible += 1;
++            }
++          });
++
++          Drupal.announce(
++            Drupal.formatPlural(
++              visible,
++              '1 item is available in the modified list.',
++              '@count items are available in the modified list.',
++            ),
++          );
++        };
++
++        /**
++         * Shows the selected area once something is in it.
++         */
++        const updateSelected = () => {
++          selected.classList.toggle(
++            'config-split-selected-filled',
++            !!selected.querySelector('.js-form-item'),
++          );
++        };
++
++        fieldset.addEventListener('change', (event) => {
++          if (!event.target.matches('input[type="checkbox"]')) {
++            return;
++          }
++          const row = event.target.closest('.js-form-item');
++          if (row && rows.includes(row)) {
++            place(row);
++            // An option coming back has to obey the query that is in the box.
++            filterList();
++            updateSelected();
++          }
++        });
++
++        rows.forEach(place);
++        updateSelected();
++
++        input.addEventListener('input', debounce(filterList, 200));
++      });
++    },
++  };
++})(Drupal, once, Drupal.debounce);
+diff --git a/src/Form/ConfigSplitEntityForm.php b/src/Form/ConfigSplitEntityForm.php
+index e88a3818f0c8817f7d1c134cfcb2140012ec953b..3864e118ce9880f79183cf30ef9e882fb7209b06 100644
+--- a/src/Form/ConfigSplitEntityForm.php
++++ b/src/Form/ConfigSplitEntityForm.php
+@@ -9,6 +9,7 @@
+ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\Site\Settings;
+ use Drupal\Core\State\StateInterface;
++use Drupal\Core\StringTranslation\TranslatableMarkup;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ 
+ /**
+@@ -226,6 +227,10 @@ public function form(array $form, FormStateInterface $form_state) {
+       '#default_value' => array_keys($config->get('module')),
+     ];
+ 
++    if ($multiselect_type === 'checkboxes') {
++      $this->wrapWithFilter($form['complete_fieldset'], 'module', $this->t('Filter modules'));
++    }
++
+     // We should probably find a better way for this.
+     $theme_handler = $this->themeExtensionList;
+     $themes = array_map(function ($theme) use ($theme_handler) {
+@@ -254,6 +259,10 @@ public function form(array $form, FormStateInterface $form_state) {
+       '#multiple' => TRUE,
+       '#default_value' => array_intersect($config->get('complete_list'), array_keys($options)),
+     ];
++
++    if ($multiselect_type === 'checkboxes') {
++      $this->wrapWithFilter($form['complete_fieldset'], 'complete_picker', $this->t('Filter configuration items'));
++    }
+     $form['complete_fieldset']['complete_text'] = [
+       '#type' => 'textarea',
+       '#title' => $this->t('Additional configuration'),
+@@ -283,6 +292,10 @@ public function form(array $form, FormStateInterface $form_state) {
+       '#multiple' => TRUE,
+       '#default_value' => array_intersect($config->get('partial_list'), array_keys($options)),
+     ];
++
++    if ($multiselect_type === 'checkboxes') {
++      $this->wrapWithFilter($form['partial_fieldset'], 'partial_picker', $this->t('Filter configuration items'));
++    }
+     $form['partial_fieldset']['partial_text'] = [
+       '#type' => 'textarea',
+       '#title' => $this->t('Additional configuration'),
+@@ -377,6 +390,85 @@ public function submitForm(array &$form, FormStateInterface $form_state) {
+     }
+   }
+ 
++  /**
++   * Wraps a checkbox list in a fieldset with a filter input above it.
++   *
++   * The lists of modules and configuration items are long enough that scrolling
++   * them is impractical, so each one gets a search box which hides the options
++   * that do not match what is typed, and an area below it, styled like the list
++   * itself, that the javascript moves the checked options into so that a
++   * selection is never scrolled or filtered out of sight. The label and the
++   * description move up to the fieldset so that both sit inside the group they
++   * belong to, and the javascript finds them through the
++   * data-config-split-filter-target attribute. Neither is rendered when
++   * javascript is off.
++   *
++   * The checkboxes element keeps its key, so its #parents and the values read
++   * in ::submitForm() are unaffected by the extra level of nesting.
++   *
++   * @param array $container
++   *   The form section the checkboxes element is in.
++   * @param string $key
++   *   The key of the checkboxes element in that section.
++   * @param \Drupal\Core\StringTranslation\TranslatableMarkup $title
++   *   The label of the filter input, which is visually hidden.
++   *
++   * @see js/config_split_form.js
++   */
++  protected function wrapWithFilter(array &$container, $key, TranslatableMarkup $title) {
++    $element = $container[$key];
++    unset($container[$key]);
++
++    $container[$key . '_wrapper'] = [
++      '#type' => 'fieldset',
++      '#title' => $element['#title'],
++      '#description' => $element['#description'],
++      '#description_display' => 'after',
++      '#attributes' => ['data-config-split-filter-target' => $key],
++      $key . '_filter' => [
++        '#type' => 'search',
++        '#title' => $title,
++        '#title_display' => 'invisible',
++        '#size' => 30,
++        '#attributes' => [
++          'class' => ['config-split-filter-text'],
++          'data-config-split-filter' => $key,
++          'autocomplete' => 'off',
++        ],
++        '#wrapper_attributes' => ['class' => ['config-split-filter', 'js-show']],
++      ],
++    ];
++
++    // The fieldset carries the label and the description now, so the element
++    // does not wrap itself in one as well.
++    unset($element['#title'], $element['#description']);
++    $container[$key . '_wrapper'][$key] = $element;
++
++    $container[$key . '_wrapper'][$key . '_selected'] = [
++      '#type' => 'container',
++      '#attributes' => [
++        'class' => ['config-split-selected'],
++        'data-config-split-selected' => $key,
++      ],
++      // Kept for screen readers, which otherwise meet a second list of
++      // checkboxes with nothing to tell them what it is.
++      'label' => [
++        '#type' => 'html_tag',
++        '#tag' => 'span',
++        '#attributes' => [
++          'class' => ['config-split-selected-label', 'visually-hidden'],
++        ],
++        '#value' => $this->t('Selected'),
++      ],
++      'items' => [
++        '#type' => 'container',
++        '#attributes' => [
++          'class' => ['form-checkboxes', 'config-split-selected-items'],
++        ],
++      ],
++    ];
++  }
++
+   /**
+    * If the chosen or select2 module is active, the form must use select field.
+    *

@@ -1,0 +1,17 @@
+{
+    "_hash": "30142799db6b8a7994558a2406a26becd771fe0d9736ac95a18d319ce52c1fcc",
+    "patches": {
+        "drupal/config_split": [
+            {
+                "package": "drupal/config_split",
+                "description": "Add quick search to config item fields (#3623901)",
+                "url": "patches/config_split-add-search-in-config-fields-3623901-mr66.patch",
+                "sha256": "d01bf932f6e9546669bf0ebd1c7ca06c863e502df37be20c74e6e8d9b4971671",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ]
+    }
+}
