@@ -1,0 +1,27 @@
+{
+    "_hash": "51decfe92de1540833321c14540892f4b192ac806fd60a958eff06ad4dfd4f31",
+    "patches": {
+        "drupal/config_split": [
+            {
+                "package": "drupal/config_split",
+                "description": "Add quick search to config item fields (#3623901)",
+                "url": "patches/config_split-add-search-in-config-fields-3623901-mr66.patch",
+                "sha256": "d01bf932f6e9546669bf0ebd1c7ca06c863e502df37be20c74e6e8d9b4971671",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            },
+            {
+                "package": "drupal/config_split",
+                "description": "Fix label",
+                "url": "patches/config_split-fix-label.patch",
+                "sha256": "bad9ceb35d4dda491b324cf6af2ccfc43012559eeb9d0e1c7f711e5ba6236a52",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ]
+    }
+}

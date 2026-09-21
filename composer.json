@@ -18,6 +18,7 @@
     "require": {
         "composer/composer": "^2.9.8",
         "composer/installers": "^2.3",
+        "cweagans/composer-patches": "^2.0",
         "drupal/addtoany": "^2.0.7",
         "drupal/ai": "^1.4.0",
         "drupal/ai_agents": "^1.2",
@@ -130,6 +131,7 @@
     "config": {
         "allow-plugins": {
             "composer/installers": true,
+            "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
             "drupal/core-recipe-unpack": true,
@@ -143,6 +145,13 @@
         "optimize-autoloader": true
     },
     "extra": {
+        "enable-patching": true,
+        "patches": {
+            "drupal/config_split": {
+                "Add quick search to config item fields (#3623901)": "patches/config_split-add-search-in-config-fields-3623901-mr66.patch",
+                "Fix label": "patches/config_split-fix-label.patch"
+            }
+        },
         "drupal-scaffold": {
             "locations": {
                 "web-root": "web/"
