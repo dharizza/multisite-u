@@ -1,0 +1,16 @@
+uuid: b4a8fa8f-5da9-47fa-9bfc-20751f18fe66
+langcode: en
+status: false
+dependencies: {  }
+id: sitio_a
+label: 'Sitio a'
+description: ''
+weight: 0
+stackable: false
+no_patching: false
+storage: folder
+folder: ../config/sites/sitio_a/default
+module: {  }
+theme: {  }
+complete_list: {  }
+partial_list: {  }
