@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="web/core/tests/bootstrap.php" colors="true">
+  <php>
+    <ini name="error_reporting" value="32767"/>
+    <env name="SIMPLETEST_BASE_URL" value="http://multisite.ddev.site"/>
+    <env name="SIMPLETEST_DB" value="mysql://db:db@db/db"/>
+    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="browsertest_output"/>
+  </php>
+  <testsuites>
+    <testsuite name="custom-modules">
+      <directory>web/modules/custom/*/tests/src</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
