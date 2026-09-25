@@ -2,10 +2,14 @@
 namespace Drupal\Tests\campus_greeting\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * @group campus_greeting
+ * Verifies the kernel test wiring works.
  */
+#[Group('campus_greeting')]
+#[RunTestsInSeparateProcesses]
 class SmokeTest extends KernelTestBase {
   public function testWiringWorks(): void {
     $this->assertTrue(TRUE);
