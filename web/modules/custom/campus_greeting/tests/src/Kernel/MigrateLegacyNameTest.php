@@ -6,10 +6,14 @@ use Drupal\Core\Extension\ModuleHandler;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
 use Override;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * @group campus_greeting
+ * Tests _campus_greeting_strip_prefix().
  */
+#[Group('campus_greeting')]
+#[RunTestsInSeparateProcesses]
 class MigrateLegacyNameTest extends KernelTestBase {
   protected static $modules = ['system', 'user', 'file', 'field', 'text', 'node', 'campus_greeting'];
 
