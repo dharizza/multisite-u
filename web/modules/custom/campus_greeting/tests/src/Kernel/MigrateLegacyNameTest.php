@@ -53,4 +53,34 @@ class MigrateLegacyNameTest extends KernelTestBase {
     // verificar que devuelve false (no hay ningún cambio)
     $this->assertFalse(_campus_greeting_strip_prefix($node));
   }
+
+  public function testSandboxLoop(): void {
+    $nodes[0] = [
+      'type' => 'event',
+      'title' => 'UCR - Campus Greeting Test Event 1',
+    ];
+    $nodes[1] = [
+      'type' => 'event',
+      'title' => 'UCR - Campus Greeting Test Event 2',
+    ];
+    $nodes[2] = [
+      'type' => 'event',
+      'title' => 'Campus Greeting Test Event 3',
+    ];
+
+    foreach ($nodes as $data) {
+      $node = Node::create($data);
+      $node->save();
+    }
+
+    $sandbox = [];
+
+    do {
+      campus_greeting_post_update_strip_event_prefix_5($sandbox);
+    } while ($sandbox['#finished'] < 1);
+
+    // A partir de acá, assertions
+    $this->assertSame(3, $sandbox['total']);
+    $this->assertSame(2, $sandbox['changed']);
+  }
 }
