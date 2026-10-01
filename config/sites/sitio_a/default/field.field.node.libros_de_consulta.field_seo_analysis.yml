@@ -1,0 +1,21 @@
+uuid: b074d8f9-caa4-47e8-b5a4-5f403303f2fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seo_analysis
+    - node.type.libros_de_consulta
+  module:
+    - yoast_seo
+id: node.libros_de_consulta.field_seo_analysis
+field_name: field_seo_analysis
+entity_type: node
+bundle: libros_de_consulta
+label: 'SEO analysis'
+description: 'Pick the main keyword this page is about.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: yoast_seo

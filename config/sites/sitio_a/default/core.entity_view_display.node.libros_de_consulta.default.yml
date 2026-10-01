@@ -1,0 +1,38 @@
+uuid: 5a14c832-f695-474b-a73f-8ac1925c4480
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.libros_de_consulta.field_isbn
+    - field.field.node.libros_de_consulta.field_seo_analysis
+    - field.field.node.libros_de_consulta.field_seo_description
+    - field.field.node.libros_de_consulta.field_seo_image
+    - field.field.node.libros_de_consulta.field_seo_title
+    - node.type.libros_de_consulta
+  module:
+    - user
+id: node.libros_de_consulta.default
+targetEntityType: node
+bundle: libros_de_consulta
+mode: default
+content:
+  field_isbn:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_seo_analysis: true
+  field_seo_description: true
+  field_seo_image: true
+  field_seo_title: true
+  search_api_excerpt: true

@@ -12,7 +12,17 @@ storage: folder
 folder: ../config/sites/sitio_a/default
 module: {  }
 theme: {  }
-complete_list: {  }
+complete_list:
+  - core.entity_form_display.node.libros_de_consulta.default
+  - core.entity_view_display.node.libros_de_consulta.default
+  - field.field.node.libros_de_consulta.field_isbn
+  - field.field.node.libros_de_consulta.field_seo_analysis
+  - field.field.node.libros_de_consulta.field_seo_description
+  - field.field.node.libros_de_consulta.field_seo_image
+  - field.field.node.libros_de_consulta.field_seo_title
+  - field.storage.node.field_isbn
+  - node.type.libros_de_consulta
+  - views.view.libros
 partial_list:
   - system.site
   - system.theme
