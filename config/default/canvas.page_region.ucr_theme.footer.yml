@@ -1,0 +1,10 @@
+uuid: 7fec8768-51a3-48b7-9993-274ceb7659cf
+langcode: en
+status: true
+dependencies:
+  theme:
+    - ucr_theme
+id: ucr_theme.footer
+region: footer
+theme: ucr_theme
+component_tree: {  }

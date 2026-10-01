@@ -1,0 +1,10 @@
+uuid: e2483b04-00af-4441-a6b4-6bff2bf752a4
+langcode: en
+status: true
+dependencies:
+  theme:
+    - ucr_theme
+id: ucr_theme.header
+region: header
+theme: ucr_theme
+component_tree: {  }

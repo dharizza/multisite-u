@@ -1,15 +1,15 @@
-uuid: b4a8fa8f-5da9-47fa-9bfc-20751f18fe66
+uuid: 6d72afe6-6cea-4ae3-a877-cd4cabf9f695
 langcode: en
 status: false
 dependencies: {  }
-id: sitio_a
-label: 'Sitio A'
+id: sitio_b
+label: 'Sitio B'
 description: ''
 weight: 0
 stackable: false
 no_patching: false
 storage: folder
-folder: ../config/sites/sitio_a/default
+folder: ../config/sites/sitio_b/default
 module: {  }
 theme: {  }
 complete_list: {  }
