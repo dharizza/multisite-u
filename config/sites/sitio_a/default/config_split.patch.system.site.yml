@@ -1,0 +1,11 @@
+adding:
+  name: 'Unidad A - UCR'
+  page:
+    403: ''
+    404: ''
+    front: /page/1
+removing:
+  name: 'My Drupal CMS site'
+  page:
+    404: /404
+    front: /page/6
