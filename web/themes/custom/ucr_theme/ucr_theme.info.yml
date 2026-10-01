@@ -1,0 +1,11 @@
+name: UCR
+type: theme
+"base theme": haven_theme
+logo: logo.svg
+description: "Front-end theme for the UCR site template."
+core_version_requirement: ^11.3
+regions:
+  content: Content
+  header: Header
+  footer: Footer
+requirements: []
