@@ -1,0 +1,27 @@
+uuid: 07bf9a2d-7a3a-457a-ac1b-a88d2a7d4485
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.menu-de-prueba
+  module:
+    - system
+active_version: 27bbc97a8929b055
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'system_menu_block:menu-de-prueba'
+        label: 'Menu de prueba'
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+label: 'Menu de prueba'
+id: block.system_menu_block.menu-de-prueba
+provider: system
+source: block
+source_local_id: 'system_menu_block:menu-de-prueba'
