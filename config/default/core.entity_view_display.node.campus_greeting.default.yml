@@ -1,0 +1,38 @@
+uuid: 7904ba73-1947-46f9-a2c4-019c1a923bd6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.campus_greeting.field_message
+    - field.field.node.campus_greeting.field_seo_analysis
+    - field.field.node.campus_greeting.field_seo_description
+    - field.field.node.campus_greeting.field_seo_image
+    - field.field.node.campus_greeting.field_seo_title
+    - node.type.campus_greeting
+  module:
+    - user
+id: node.campus_greeting.default
+targetEntityType: node
+bundle: campus_greeting
+mode: default
+content:
+  field_message:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_seo_analysis: true
+  field_seo_description: true
+  field_seo_image: true
+  field_seo_title: true
+  search_api_excerpt: true

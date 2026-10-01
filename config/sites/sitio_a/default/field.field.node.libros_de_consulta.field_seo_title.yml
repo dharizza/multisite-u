@@ -1,0 +1,19 @@
+uuid: 99c63eac-dae9-483e-a2c6-93b8cf016cbc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seo_title
+    - node.type.libros_de_consulta
+id: node.libros_de_consulta.field_seo_title
+field_name: field_seo_title
+entity_type: node
+bundle: libros_de_consulta
+label: 'SEO title'
+description: 'Use this field to overwrite the default HTML page title for SEO.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

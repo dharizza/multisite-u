@@ -15,6 +15,10 @@ dependencies:
     - field.field.node.event.field_seo_description
     - field.field.node.event.field_seo_image
     - field.field.node.event.field_seo_title
+    - field.field.node.libros_de_consulta.field_seo_analysis
+    - field.field.node.libros_de_consulta.field_seo_description
+    - field.field.node.libros_de_consulta.field_seo_image
+    - field.field.node.libros_de_consulta.field_seo_title
     - field.field.node.news.field_seo_analysis
     - field.field.node.news.field_seo_description
     - field.field.node.news.field_seo_image

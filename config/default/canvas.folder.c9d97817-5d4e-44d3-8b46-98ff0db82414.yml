@@ -8,6 +8,7 @@ dependencies:
     - canvas.component.block.system_menu_block.content
     - canvas.component.block.system_menu_block.footer
     - canvas.component.block.system_menu_block.main
+    - canvas.component.block.system_menu_block.menu-de-prueba
     - canvas.component.block.system_menu_block.navigation-user-links
     - canvas.component.block.system_menu_block.secondary
     - canvas.component.block.system_menu_block.social
@@ -22,6 +23,7 @@ items:
   - block.system_menu_block.content
   - block.system_menu_block.footer
   - block.system_menu_block.main
+  - block.system_menu_block.menu-de-prueba
   - block.system_menu_block.navigation-user-links
   - block.system_menu_block.secondary
   - block.system_menu_block.social

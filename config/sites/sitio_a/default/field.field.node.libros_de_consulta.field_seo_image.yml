@@ -1,0 +1,24 @@
+uuid: 8f4da3d1-d778-4354-a959-8df735ec0335
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seo_image
+    - media.type.image
+    - node.type.libros_de_consulta
+id: node.libros_de_consulta.field_seo_image
+field_name: field_seo_image
+entity_type: node
+bundle: libros_de_consulta
+label: 'SEO image'
+description: 'Upload an image to be used when the page is shared on social media sites.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+field_type: entity_reference
