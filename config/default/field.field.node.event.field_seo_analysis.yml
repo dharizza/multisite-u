@@ -1,0 +1,21 @@
+uuid: 6cf7a38e-faf0-4b79-8457-b767871b4f11
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seo_analysis
+    - node.type.event
+  module:
+    - yoast_seo
+id: node.event.field_seo_analysis
+field_name: field_seo_analysis
+entity_type: node
+bundle: event
+label: 'SEO analysis'
+description: 'Pick the main keyword this page is about.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: yoast_seo

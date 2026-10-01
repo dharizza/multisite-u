@@ -6,8 +6,11 @@ dependencies:
     - field.field.node.event.field_body
     - field.field.node.event.field_date_time
     - field.field.node.event.field_image
+    - field.field.node.event.field_seo_analysis
+    - field.field.node.event.field_seo_description
+    - field.field.node.event.field_seo_image
+    - field.field.node.event.field_seo_title
     - node.type.event
-    - workflows.workflow.basic_editorial
   module:
     - content_moderation
     - datetime
@@ -98,6 +101,10 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_seo_analysis: true
+  field_seo_description: true
+  field_seo_image: true
+  field_seo_title: true
   promote: true
   publish_on: true
   publish_state: true

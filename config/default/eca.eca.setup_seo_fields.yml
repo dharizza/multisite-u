@@ -7,6 +7,14 @@ dependencies:
     - field.field.node.blog.field_seo_description
     - field.field.node.blog.field_seo_image
     - field.field.node.blog.field_seo_title
+    - field.field.node.campus_greeting.field_seo_analysis
+    - field.field.node.campus_greeting.field_seo_description
+    - field.field.node.campus_greeting.field_seo_image
+    - field.field.node.campus_greeting.field_seo_title
+    - field.field.node.event.field_seo_analysis
+    - field.field.node.event.field_seo_description
+    - field.field.node.event.field_seo_image
+    - field.field.node.event.field_seo_title
     - field.field.node.news.field_seo_analysis
     - field.field.node.news.field_seo_description
     - field.field.node.news.field_seo_image
