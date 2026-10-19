@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for campus_greeting_feedback.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function campus_greeting_feedback_schema(): array {
+  $schema['campus_greeting_feedback'] = [
+    'description' => 'Saludos enviados por visitantes.',
+    'fields' => [
+      'id' => ['type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE],
+      'name' => ['type' => 'varchar', 'length' => 128, 'not null' => TRUE, 'default' => ''],
+      'message' => ['type' => 'text', 'size' => 'normal', 'not null' => TRUE],
+      'created' => ['type' => 'int', 'not null' => TRUE, 'default' => 0],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}

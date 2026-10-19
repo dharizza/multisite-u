@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Lista de saludos del campus.
+ *
+ * Variables:
+ * - items: filas con id, name, message, created.
+ * - can_delete: si se muestra el enlace para eliminar.
+ */
+#}
+<div class="campus-greeting-feedback">
+  {% for item in items %}
+    <article class="campus-greeting-feedback__item">
+      <h3>{{ item.name }}</h3>
+      <div class="campus-greeting-feedback__message">{{ item.message|raw }}</div>
+      {% if can_delete %}
+        <a href="{{ path('campus_greeting_feedback.delete', {'id': item.id}) }}">{{ 'Eliminar'|t }}</a>
+      {% endif %}
+    </article>
+  {% else %}
+    <p>{{ 'Todavía no hay saludos.'|t }}</p>
+  {% endfor %}
+</div>

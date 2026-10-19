@@ -1,0 +1,31 @@
+campus_greeting_feedback.form:
+  path: '/saludos/enviar'
+  defaults:
+    _form: '\Drupal\campus_greeting_feedback\Form\FeedbackForm'
+    _title: 'Enviar un saludo'
+  requirements:
+    _permission: 'access content'
+
+campus_greeting_feedback.list:
+  path: '/saludos'
+  defaults:
+    _controller: '\Drupal\campus_greeting_feedback\Controller\FeedbackController::list'
+    _title: 'Saludos recibidos'
+  requirements:
+    _permission: 'access content'
+
+campus_greeting_feedback.search:
+  path: '/saludos/buscar'
+  defaults:
+    _controller: '\Drupal\campus_greeting_feedback\Controller\FeedbackController::search'
+    _title: 'Buscar saludos'
+  requirements:
+    _permission: 'access content'
+
+campus_greeting_feedback.delete:
+  path: '/admin/saludos/{id}/eliminar'
+  defaults:
+    _controller: '\Drupal\campus_greeting_feedback\Controller\FeedbackController::delete'
+  requirements:
+    _access: 'TRUE'
+    id: '\d+'
