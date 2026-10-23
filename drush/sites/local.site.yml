@@ -1,0 +1,12 @@
+default:
+  root: /var/www/html/web
+  uri: https://multisite.ddev.site
+sitio-a:
+  root: /var/www/html/web
+  uri: https://unidad-a.ddev.site
+sitio-b:
+  root: /var/www/html/web
+  uri: https://unidad-b.ddev.site
+sitio-c:
+  root: /var/www/html/web
+  uri: https://unidad-c.ddev.site
