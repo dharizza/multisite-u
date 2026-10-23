@@ -1,0 +1,22 @@
+uuid: 0ac82bf8-3c16-4519-8ec2-c003a284ccf2
+langcode: en
+status: true
+dependencies:
+  module:
+    - campus_greeting_widgets
+active_version: 58a8ad66580034f2
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: campus_greeting_widgets_latest
+        label: 'Últimos saludos del campus'
+        label_display: '0'
+        provider: campus_greeting_widgets
+    fallback_metadata:
+      slot_definitions: null
+label: 'Últimos saludos del campus'
+id: block.campus_greeting_widgets_latest
+provider: campus_greeting_widgets
+source: block
+source_local_id: campus_greeting_widgets_latest

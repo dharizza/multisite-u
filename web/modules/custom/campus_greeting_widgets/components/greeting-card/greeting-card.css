@@ -1,0 +1,36 @@
+.greeting-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+}
+
+.greeting-card__icon {
+  float: left;
+  margin-right: 0.75rem;
+}
+
+.greeting-card__name {
+  margin: 0;
+}
+
+.greeting-card__date {
+  color: #a6a6a6;
+  font-size: 0.8rem;
+}
+
+.greeting-card__like {
+  display: inline-block;
+  padding: 1px 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.greeting-card__like.is-liked {
+  color: #0e7c7b;
+}
+
+.greeting-card__like:focus {
+  outline: none;
+}

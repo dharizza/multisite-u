@@ -10,6 +10,8 @@ module:
   bpmn_io: 0
   breakpoint: 0
   campus_greeting: 0
+  campus_greeting_feedback: 0
+  campus_greeting_widgets: 0
   canvas: 0
   captcha: 0
   checklistapi: 0
