@@ -1,0 +1,11 @@
+uuid: 2d4fff9e-54a1-4100-9b4c-ace5bd7dec2d
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.campus_greeting_widgets_latest
+name: 'UCR Training'
+configEntityTypeId: component
+weight: 0
+items:
+  - block.campus_greeting_widgets_latest
