@@ -6,13 +6,16 @@
  * Variables:
  * - items: filas con id, name, message, created.
  * - can_delete: si se muestra el enlace para eliminar.
+ *
+ * Hallazgo 2: sin |raw. Twig escapa el mensaje automáticamente.
+ * path() agrega el token CSRF porque la ruta declara _csrf_token.
  */
 #}
 <div class="campus-greeting-feedback">
   {% for item in items %}
     <article class="campus-greeting-feedback__item">
       <h3>{{ item.name }}</h3>
-      <div class="campus-greeting-feedback__message">{{ item.message|raw }}</div>
+      <div class="campus-greeting-feedback__message">{{ item.message }}</div>
       {% if can_delete %}
         <a href="{{ path('campus_greeting_feedback.delete', {'id': item.id}) }}">{{ 'Eliminar'|t }}</a>
       {% endif %}

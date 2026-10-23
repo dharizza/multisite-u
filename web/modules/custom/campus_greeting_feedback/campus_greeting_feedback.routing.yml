@@ -27,5 +27,8 @@ campus_greeting_feedback.delete:
   defaults:
     _controller: '\Drupal\campus_greeting_feedback\Controller\FeedbackController::delete'
   requirements:
-    _access: 'TRUE'
+    # Hallazgo 4: solo quien tenga el permiso puede eliminar.
+    _permission: 'administer campus greetings'
+    # Hallazgo 5: exige un token CSRF en la URL (?token=...).
+    _csrf_token: 'TRUE'
     id: '\d+'

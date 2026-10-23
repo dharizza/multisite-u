@@ -34,9 +34,11 @@ class FeedbackController extends ControllerBase {
     return [
       '#theme' => 'campus_greeting_feedback_list',
       '#items' => $items,
-      '#can_delete' => TRUE,
+      // Hallazgo 4: el enlace solo se muestra a quien puede usarlo.
+      '#can_delete' => $this->currentUser()->hasPermission('administer campus greetings'),
       '#cache' => [
         'tags' => ['campus_greeting_feedback_list'],
+        'contexts' => ['user.permissions'],
       ],
     ];
   }
@@ -47,17 +49,22 @@ class FeedbackController extends ControllerBase {
   public function search(Request $request): array {
     $term = (string) $request->query->get('q', '');
 
-    $items = $this->database->query(
-      "SELECT id, name, message, created FROM {campus_greeting_feedback} WHERE name LIKE '%" . $term . "%'"
-    )->fetchAll();
+    // Hallazgo 1: Query builder + escapeLike() en lugar de concatenar SQL.
+    $items = $this->database->select('campus_greeting_feedback', 'f')
+      ->fields('f', ['id', 'name', 'message', 'created'])
+      ->condition('name', '%' . $this->database->escapeLike($term) . '%', 'LIKE')
+      ->orderBy('created', 'DESC')
+      ->range(0, 50)
+      ->execute()
+      ->fetchAll();
 
     return [
       '#theme' => 'campus_greeting_feedback_list',
       '#items' => $items,
-      '#can_delete' => TRUE,
+      '#can_delete' => $this->currentUser()->hasPermission('administer campus greetings'),
       '#cache' => [
         'tags' => ['campus_greeting_feedback_list'],
-        'contexts' => ['url.query_args:q'],
+        'contexts' => ['url.query_args:q', 'user.permissions'],
       ],
     ];
   }
