@@ -1,5 +1,5 @@
 name: 'Campus Greeting Feedback (ejercicio de seguridad)'
 type: module
-description: 'Módulo de práctica con vulnerabilidades sembradas para la auditoría de la Clase 1. NO instalar en producción.'
+description: 'Módulo de práctica con vulnerabilidades resueltas para la auditoría de la Clase 22. NO instalar en producción.'
 core_version_requirement: ^11
 package: 'UCR Training'
