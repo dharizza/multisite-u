@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Hooks for campus_greeting_feedback.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function campus_greeting_feedback_theme($existing, $type, $theme, $path): array {
+  return [
+    'campus_greeting_feedback_list' => [
+      'variables' => ['items' => [], 'can_delete' => FALSE],
+    ],
+  ];
+}

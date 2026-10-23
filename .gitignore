@@ -6,6 +6,7 @@
 /web/modules/contrib
 /web/profiles/contrib
 /web/themes/contrib
+/private
 
 # macOS
 .DS_Store

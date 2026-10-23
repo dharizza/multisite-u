@@ -1,0 +1,4 @@
+administer campus greetings:
+  title: 'Administrar saludos del campus'
+  description: 'Eliminar saludos enviados por visitantes.'
+  restrict access: true
