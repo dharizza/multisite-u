@@ -34,9 +34,11 @@ class FeedbackController extends ControllerBase {
     return [
       '#theme' => 'campus_greeting_feedback_list',
       '#items' => $items,
-      '#can_delete' => TRUE,
+      // Hallazgo 4: el enlace solo se muestra a quien puede usarlo.
+      '#can_delete' => $this->currentUser()->hasPermission('administer campus greetings'),
       '#cache' => [
         'tags' => ['campus_greeting_feedback_list'],
+        'contexts' => ['user.permissions'],
       ],
     ];
   }

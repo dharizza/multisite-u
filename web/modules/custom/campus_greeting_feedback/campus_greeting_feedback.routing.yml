@@ -27,5 +27,5 @@ campus_greeting_feedback.delete:
   defaults:
     _controller: '\Drupal\campus_greeting_feedback\Controller\FeedbackController::delete'
   requirements:
-    _access: 'TRUE'
-    id: '\d+'
+    # Hallazgo 4: solo quien tenga el permiso puede eliminar.
+    _permission: 'administer campus greetings'
