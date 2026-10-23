@@ -61,7 +61,9 @@ class FeedbackForm extends FormBase {
       ->execute();
     Cache::invalidateTags(['campus_greeting_feedback_list']);
 
-    $this->messenger()->addStatus($this->t('¡Gracias, ' . $name . '! Su saludo fue publicado.'));
+    // Hallazgo 3: nunca concatenar datos del usuario dentro de t().
+    // El placeholder @name se escapa automáticamente.
+    $this->messenger()->addStatus($this->t('¡Gracias, @name! Su saludo fue publicado.', ['@name' => $name]));
     $form_state->setRedirect('campus_greeting_feedback.list');
   }
 
