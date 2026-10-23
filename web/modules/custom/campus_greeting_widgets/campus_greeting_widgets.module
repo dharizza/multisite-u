@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Hooks for campus_greeting_widgets.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function campus_greeting_widgets_theme($existing, $type, $theme, $path): array {
+  return [
+    'campus_greeting_widgets_latest' => [
+      'variables' => [
+        'welcome' => NULL,
+        'items' => [],
+        'total' => 0,
+        'icon_url' => '',
+      ],
+    ],
+  ];
+}

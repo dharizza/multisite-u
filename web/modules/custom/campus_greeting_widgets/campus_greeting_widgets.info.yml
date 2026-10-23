@@ -1,0 +1,7 @@
+name: 'Campus Greeting Widgets (ejercicio de rendimiento y accesibilidad)'
+type: module
+description: 'Bloque de últimos saludos con problemas de caché y accesibilidad sembrados para la Clase 2. NO instalar en producción.'
+core_version_requirement: ^11
+package: 'UCR Training'
+dependencies:
+  - campus_greeting_feedback:campus_greeting_feedback

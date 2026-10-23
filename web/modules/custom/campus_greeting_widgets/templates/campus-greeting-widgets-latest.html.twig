@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Bloque "Últimos saludos del campus".
+ *
+ * Variables:
+ * - welcome: saludo personal para el usuario actual.
+ * - items: últimos saludos (id, name, message, created).
+ * - total: cantidad total de saludos.
+ * - icon_url: URL del ícono de saludo.
+ */
+#}
+<div class="campus-greeting-widgets">
+  <h5 class="campus-greeting-widgets__welcome">{{ welcome }}</h5>
+  <p class="campus-greeting-widgets__total">{{ 'Saludos recibidos: @total'|t({'@total': total}) }}</p>
+
+  {% for item in items %}
+    {{ include('campus_greeting_widgets:greeting-card', {
+      name: item.name,
+      message: item.message,
+      date: item.created|format_date('short'),
+      icon_url: icon_url,
+    }, with_context = false) }}
+  {% endfor %}
+
+  <a href="{{ path('campus_greeting_feedback.form') }}" class="campus-greeting-widgets__add">
+    <img src="{{ icon_url }}" width="24" height="24">
+  </a>
+</div>

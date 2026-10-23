@@ -1,0 +1,26 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Tarjeta de saludo
+status: stable
+description: 'Muestra un saludo del campus con botón de "Me gusta".'
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
+props:
+  type: object
+  required:
+    - name
+    - message
+  properties:
+    name:
+      type: string
+      title: Nombre
+    message:
+      type: string
+      title: Mensaje
+    date:
+      type: string
+      title: Fecha
+    icon_url:
+      type: string
+      title: URL del ícono
