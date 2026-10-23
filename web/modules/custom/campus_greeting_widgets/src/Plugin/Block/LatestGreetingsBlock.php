@@ -76,7 +76,7 @@ class LatestGreetingsBlock extends BlockBase implements ContainerFactoryPluginIn
       // El bloque no se actualizaba cuando alguien enviaba un saludo nuevo,
       // así que se desactivó la caché.
       '#cache' => [
-        'max-age' => 0,
+        'tags' => ['campus_greeting_feedback_list'],
       ],
     ];
   }
