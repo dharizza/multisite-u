@@ -1,0 +1,161 @@
+---
+# Crea un subsitio nuevo de punta a punta en el entorno local (DDEV):
+# base de datos, carpeta, settings.php, sites.php, hostname, instalación
+# e inventario.
+#
+#   ansible-playbook playbooks/nuevo_subsitio.yml -e nombre=facultad_c
+#
+# Opcional:
+#   -e "titulo='Facultad C'"                      nombre visible del sitio
+#   -e receta=recipes/mi_receta_base              receta a aplicar al final
+#   -e perfil=minimal                             perfil de instalación
+
+- name: Crear un subsitio nuevo
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    proyecto_dir: "{{ (playbook_dir ~ '/../..') | realpath }}"
+    perfil: standard
+    titulo: "{{ nombre | default('') | replace('_', ' ') | title }}"
+    receta: ""
+    base_datos: "{{ nombre }}"
+    db_usuario: db
+    db_clave: db
+    db_host: db
+    db_puerto: 3306
+
+  tasks:
+    - name: Validar el nombre del subsitio
+      ansible.builtin.assert:
+        that:
+          - nombre is defined
+          - nombre is match('^[a-z][a-z0-9_]{2,30}$')
+          - nombre != 'default'
+        fail_msg: >-
+          Indique un nombre en minúsculas, sin espacios ni guiones, por ejemplo:
+          -e nombre=facultad_c
+
+    # Se fijan una sola vez: si se dejan como variables, Ansible las volvería
+    # a generar cada vez que se usan.
+    - name: Generar la sal del sitio y la contraseña de admin
+      ansible.builtin.set_fact:
+        hash_salt: "{{ lookup('password', '/dev/null', chars=['ascii_letters', 'digits'], length=64) }}"
+        clave_admin: "{{ lookup('password', '/dev/null', chars=['ascii_letters', 'digits'], length=16) }}"
+
+    - name: Revisar que el subsitio no exista
+      ansible.builtin.stat:
+        path: "{{ proyecto_dir }}/web/sites/{{ nombre }}"
+      register: carpeta
+
+    - name: Detener si ya existe
+      ansible.builtin.assert:
+        that: not carpeta.stat.exists
+        fail_msg: "Ya existe web/sites/{{ nombre }}."
+
+    - name: Leer el nombre del proyecto DDEV
+      ansible.builtin.command: ddev describe -j
+      args:
+        chdir: "{{ proyecto_dir }}"
+      register: ddev_describe
+      changed_when: false
+
+    - name: Calcular el hostname del subsitio
+      ansible.builtin.set_fact:
+        proyecto_ddev: "{{ (ddev_describe.stdout_lines | select('search', 'primary_url') | first | from_json).raw.name }}"
+        hostname_corto: "{{ nombre | replace('_', '-') }}.{{ (ddev_describe.stdout_lines | select('search', 'primary_url') | first | from_json).raw.name }}"
+
+    - name: Hostname completo
+      ansible.builtin.set_fact:
+        hostname: "{{ hostname_corto }}.ddev.site"
+
+    # 1. Base de datos
+    - name: Crear la base de datos y dar permisos al usuario db
+      ansible.builtin.command: >-
+        ddev mysql -uroot -proot -e
+        "CREATE DATABASE IF NOT EXISTS `{{ base_datos }}`;
+        GRANT ALL ON `{{ base_datos }}`.* TO '{{ db_usuario }}'@'%';"
+      args:
+        chdir: "{{ proyecto_dir }}"
+      changed_when: true
+
+    # 2. Carpetas
+    - name: Crear las carpetas del subsitio
+      ansible.builtin.file:
+        path: "{{ proyecto_dir }}/{{ item }}"
+        state: directory
+        mode: "0775"
+      loop:
+        - web/sites/{{ nombre }}
+        - web/sites/{{ nombre }}/files
+        - config/{{ nombre }}
+        - private/{{ nombre }}
+
+    # 3. settings.php
+    - name: Escribir settings.php desde la plantilla
+      ansible.builtin.template:
+        src: ../plantillas/settings.php.j2
+        dest: "{{ proyecto_dir }}/web/sites/{{ nombre }}/settings.php"
+        mode: "0644"
+
+    # 4. sites.php
+    - name: Crear sites.php si no existe
+      ansible.builtin.copy:
+        dest: "{{ proyecto_dir }}/web/sites/sites.php"
+        content: "<?php\n\n// Mapeo de hostnames a carpetas de sites/.\n"
+        force: false
+        mode: "0644"
+
+    - name: Registrar el hostname en sites.php
+      ansible.builtin.lineinfile:
+        path: "{{ proyecto_dir }}/web/sites/sites.php"
+        line: "$sites['{{ hostname }}'] = '{{ nombre }}';"
+
+    # 5. Hostname en DDEV (en producción: vhost, DNS y certificado)
+    - name: Leer la configuración de DDEV
+      ansible.builtin.slurp:
+        src: "{{ proyecto_dir }}/.ddev/config.yaml"
+      register: ddev_config_raw
+
+    - name: Calcular los hostnames adicionales
+      ansible.builtin.set_fact:
+        hostnames_actuales: "{{ (ddev_config_raw.content | b64decode | from_yaml).additional_hostnames | default([], true) }}"
+
+    - name: Agregar el hostname a DDEV y reiniciar el proyecto
+      ansible.builtin.command: "{{ item }}"
+      args:
+        chdir: "{{ proyecto_dir }}"
+      loop:
+        - ddev config --additional-hostnames={{ (hostnames_actuales + [hostname_corto]) | join(',') }}
+        - ddev restart
+      when: hostname_corto not in hostnames_actuales
+      changed_when: true
+
+    # 6. Instalación
+    - name: Instalar Drupal en el subsitio
+      ansible.builtin.command: >-
+        ddev drush --uri=https://{{ hostname }} site:install {{ perfil }}
+        --sites-subdir={{ nombre }}
+        --site-name="{{ titulo }}"
+        --account-name=admin --account-pass={{ clave_admin }} -y
+      args:
+        chdir: "{{ proyecto_dir }}"
+      changed_when: true
+
+    - name: Aplicar la receta base
+      ansible.builtin.command: ddev drush --uri=https://{{ hostname }} recipe {{ receta }}
+      args:
+        chdir: "{{ proyecto_dir }}"
+      when: receta | length > 0
+      changed_when: true
+
+    - name: Datos de acceso
+      ansible.builtin.debug:
+        msg:
+          - "Subsitio listo: https://{{ hostname }}"
+          - "Usuario: admin  |  Contraseña: {{ clave_admin }}"
+          - "El inventario se actualiza a continuación."
+
+# 7. Inventario: el subsitio nuevo queda disponible para los demás playbooks.
+- name: Actualizar el inventario
+  ansible.builtin.import_playbook: generar_inventario.yml

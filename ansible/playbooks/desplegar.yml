@@ -1,0 +1,78 @@
+---
+# Despliega el código y actualiza los subsitios de uno en uno.
+#
+#   ansible-playbook playbooks/desplegar.yml                  # todos, de uno en uno
+#   ansible-playbook playbooks/desplegar.yml --limit default  # solo un subsitio
+#   ansible-playbook playbooks/desplegar.yml -e lote=2        # de dos en dos
+
+- name: Preparar el código (una sola vez para todos los subsitios)
+  hosts: subsitios
+  gather_facts: false
+
+  tasks:
+    - name: Traer los últimos cambios de Git
+      ansible.builtin.command: git pull --ff-only origin {{ rama }}
+      args:
+        chdir: "{{ proyecto_dir }}"
+      run_once: true
+      when: actualizar_codigo | bool
+      register: git_pull
+      changed_when: "'Already up to date' not in git_pull.stdout"
+
+    - name: Instalar dependencias con Composer
+      ansible.builtin.command: "{{ composer }} install {{ composer_install_opciones }}"
+      args:
+        chdir: "{{ proyecto_dir }}"
+      run_once: true
+      register: composer_install
+      changed_when: "'Nothing to install' not in composer_install.stderr"
+
+- name: Actualizar cada subsitio
+  hosts: subsitios
+  gather_facts: false
+  # De uno en uno (o de "lote" en "lote"). Si un subsitio falla, se detiene
+  # todo: los que faltan quedan sin tocar.
+  serial: "{{ lote | default(1) }}"
+  max_fail_percentage: 0
+
+  tasks:
+    - name: Actualizar el subsitio
+      block:
+        - name: Activar modo mantenimiento
+          ansible.builtin.command: >-
+            {{ drush }} --uri={{ site_uri }} state:set system.maintenance_mode 1 --input-format=integer
+          args:
+            chdir: "{{ proyecto_dir }}"
+          changed_when: true
+
+        - name: Ejecutar drush deploy (updatedb, config:import, cache:rebuild, deploy hooks)
+          ansible.builtin.command: "{{ drush }} --uri={{ site_uri }} deploy -y"
+          args:
+            chdir: "{{ proyecto_dir }}"
+          changed_when: true
+
+        - name: Desactivar modo mantenimiento
+          ansible.builtin.command: >-
+            {{ drush }} --uri={{ site_uri }} state:set system.maintenance_mode 0 --input-format=integer
+          args:
+            chdir: "{{ proyecto_dir }}"
+          changed_when: true
+
+        - name: Prueba de humo, la portada responde 200
+          ansible.builtin.uri:
+            url: "{{ site_uri }}"
+            validate_certs: "{{ validar_certificados }}"
+            status_code: 200
+          register: humo
+          retries: 3
+          delay: 5
+          until: humo.status == 200
+
+      rescue:
+        - name: Avisar y detener el despliegue
+          ansible.builtin.fail:
+            msg: >-
+              Falló la actualización de {{ inventory_hostname }} ({{ site_uri }}).
+              El subsitio puede haber quedado en modo mantenimiento. Revise el
+              error de arriba antes de continuar. Los subsitios siguientes no
+              se tocaron.

@@ -1,0 +1,65 @@
+---
+# Respalda la base de datos y los archivos de cada subsitio en
+# backups/<fecha>/ y conserva solo los últimos respaldos.
+#
+#   ansible-playbook playbooks/respaldar.yml
+#   ansible-playbook playbooks/respaldar.yml --limit default
+
+- name: Respaldar los subsitios
+  hosts: subsitios
+  gather_facts: false
+
+  tasks:
+    - name: Fijar la etiqueta del respaldo (igual para todos los subsitios)
+      ansible.builtin.set_fact:
+        etiqueta: "{{ etiqueta | default(lookup('pipe', 'date +%Y-%m-%d_%H%M')) }}"
+      run_once: true
+
+    - name: Crear la carpeta del respaldo
+      ansible.builtin.file:
+        path: "{{ proyecto_dir }}/backups/{{ etiqueta }}"
+        state: directory
+        mode: "0750"
+      run_once: true
+
+    - name: Respaldar la base de datos
+      ansible.builtin.command: >-
+        {{ drush }} --uri={{ site_uri }} sql:dump --gzip
+        --result-file={{ ruta_drush_proyecto }}/backups/{{ etiqueta }}/{{ site_dir }}.sql
+      args:
+        chdir: "{{ proyecto_dir }}"
+      changed_when: true
+
+    - name: Revisar si el subsitio tiene carpeta de archivos
+      ansible.builtin.stat:
+        path: "{{ proyecto_dir }}/web/sites/{{ site_dir }}/files"
+      register: carpeta_files
+
+    - name: Respaldar los archivos públicos (sin estilos de imagen ni CSS/JS agregados)
+      ansible.builtin.command: >-
+        tar czf {{ proyecto_dir }}/backups/{{ etiqueta }}/{{ site_dir }}-files.tar.gz
+        --exclude=files/styles --exclude=files/css --exclude=files/js --exclude=files/php
+        -C {{ proyecto_dir }}/web/sites/{{ site_dir }} files
+      changed_when: true
+      when: carpeta_files.stat.exists
+
+    - name: Buscar respaldos anteriores
+      ansible.builtin.find:
+        paths: "{{ proyecto_dir }}/backups"
+        file_type: directory
+      register: anteriores
+      run_once: true
+
+    - name: Borrar los respaldos que sobran
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: >-
+        {{ (anteriores.files | sort(attribute='path', reverse=true))[respaldos_a_conservar | int :] }}
+      loop_control:
+        label: "{{ item.path | basename }}"
+      run_once: true
+
+    - name: Resultado
+      ansible.builtin.debug:
+        msg: "Respaldo de {{ inventory_hostname }} en backups/{{ etiqueta }}/"

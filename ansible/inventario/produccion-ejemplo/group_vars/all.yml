@@ -1,0 +1,18 @@
+# EJEMPLO de cómo se vería el entorno de producción. No es ejecutable tal cual:
+# los nombres de servidor, usuario y rutas son ilustrativos.
+ansible_connection: ssh
+ansible_user: deploy
+
+entorno: produccion
+
+proyecto_dir: /var/www/plataforma
+drush: vendor/bin/drush
+composer: composer
+composer_install_opciones: --no-interaction --no-dev --optimize-autoloader
+ruta_drush_proyecto: "{{ proyecto_dir }}"
+
+actualizar_codigo: true
+rama: main
+
+validar_certificados: true
+respaldos_a_conservar: 14

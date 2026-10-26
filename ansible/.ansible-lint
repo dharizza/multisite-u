@@ -1,0 +1,5 @@
+# run_once: los playbooks usan la estrategia por defecto (linear).
+# tar con command: se usa a propósito por las exclusiones (--exclude).
+skip_list:
+  - run-once[task]
+  - command-instead-of-module
