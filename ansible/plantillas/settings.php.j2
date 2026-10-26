@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * settings.php del subsitio "{{ nombre }}".
+ *
+ * GENERADO por playbooks/nuevo_subsitio.yml. En producción, los mismos
+ * valores vendrían de variables cifradas con Ansible Vault.
+ */
+
+$databases['default']['default'] = [
+  'database' => '{{ base_datos }}',
+  'username' => '{{ db_usuario }}',
+  'password' => '{{ db_clave }}',
+  'host' => '{{ db_host }}',
+  'port' => '{{ db_puerto }}',
+  'driver' => 'mysql',
+  'prefix' => '',
+  'collation' => 'utf8mb4_general_ci',
+];
+
+$settings['hash_salt'] = '{{ hash_salt }}';
+
+$settings['trusted_host_patterns'] = [
+  '^{{ hostname | regex_escape }}$',
+];
+
+$settings['config_sync_directory'] = '../config/{{ nombre }}';
+$settings['file_private_path'] = '../private/{{ nombre }}';
+
+// Opciones locales opcionales (por ejemplo, las cabeceras de depuración).
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}

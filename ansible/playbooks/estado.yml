@@ -1,0 +1,56 @@
+---
+# Revisa el estado de cada subsitio sin cambiar nada.
+#
+#   ansible-playbook playbooks/estado.yml
+#   ansible-playbook playbooks/estado.yml --limit default
+
+- name: Estado de los subsitios
+  hosts: subsitios
+  gather_facts: false
+
+  tasks:
+    - name: Consultar versión y base de datos
+      ansible.builtin.command: >-
+        {{ drush }} --uri={{ site_uri }} status
+        --fields=drupal-version,db-status,bootstrap --format=json
+      args:
+        chdir: "{{ proyecto_dir }}"
+      register: status
+      changed_when: false
+
+    - name: Consultar la última ejecución de cron
+      ansible.builtin.command: "{{ drush }} --uri={{ site_uri }} state:get system.cron_last"
+      args:
+        chdir: "{{ proyecto_dir }}"
+      register: cron_last
+      changed_when: false
+
+    - name: Contar los errores del informe de estado
+      ansible.builtin.command: >-
+        {{ drush }} --uri={{ site_uri }} core:requirements --severity=2 --format=json
+      args:
+        chdir: "{{ proyecto_dir }}"
+      register: requisitos
+      changed_when: false
+      failed_when: false
+
+    - name: Probar que la portada responde
+      ansible.builtin.uri:
+        url: "{{ site_uri }}"
+        validate_certs: "{{ validar_certificados }}"
+        status_code: 200
+      register: portada
+      failed_when: false
+
+    - name: Resumen
+      vars:
+        datos: "{{ status.stdout | from_json }}"
+        errores: "{{ (requisitos.stdout | from_json | length) if requisitos.rc == 0 and requisitos.stdout else 'no disponible' }}"
+        cron: "{{ '%Y-%m-%d %H:%M' | strftime(cron_last.stdout | int) if cron_last.stdout | int > 0 else 'nunca' }}"
+      ansible.builtin.debug:
+        msg:
+          - "URL: {{ site_uri }}"
+          - "Drupal: {{ datos['drupal-version'] | default('?') }} | BD: {{ datos['db-status'] | default('?') }}"
+          - "Último cron: {{ cron }}"
+          - "Errores en el informe de estado: {{ errores }}"
+          - "Portada: HTTP {{ portada.status | default('sin respuesta') }}"

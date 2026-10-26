@@ -1,0 +1,108 @@
+---
+# Restaura UN subsitio desde un respaldo y mide cuánto tardó (RTO).
+#
+#   ansible-playbook playbooks/restaurar.yml --limit default -e respaldo=2026-10-30_1015
+#
+# Pide confirmación antes de borrar la base de datos. Para omitirla:
+#   -e confirmar=si
+
+- name: Restaurar un subsitio
+  hosts: subsitios
+  gather_facts: false
+  serial: 1
+
+  tasks:
+    - name: Exigir --limit y la etiqueta del respaldo
+      ansible.builtin.assert:
+        that:
+          - ansible_limit is defined
+          - respaldo is defined
+        fail_msg: >-
+          Indique el subsitio y el respaldo, por ejemplo:
+          ansible-playbook playbooks/restaurar.yml --limit default -e respaldo=2026-10-30_1015
+      run_once: true
+
+    - name: Revisar que exista el respaldo de la base de datos
+      ansible.builtin.stat:
+        path: "{{ proyecto_dir }}/backups/{{ respaldo }}/{{ site_dir }}.sql.gz"
+      register: dump
+
+    - name: Detener si no existe
+      ansible.builtin.assert:
+        that: dump.stat.exists
+        fail_msg: "No existe backups/{{ respaldo }}/{{ site_dir }}.sql.gz"
+
+    - name: Confirmar
+      ansible.builtin.pause:
+        prompt: >-
+          Se va a BORRAR la base de datos de {{ inventory_hostname }} ({{ site_uri }})
+          y reemplazarla con el respaldo {{ respaldo }}. Escriba "si" para continuar
+      register: confirmacion
+      when: confirmar | default('') != 'si'
+
+    - name: Cancelar si no se confirmó
+      ansible.builtin.fail:
+        msg: Restauración cancelada.
+      when:
+        - confirmar | default('') != 'si'
+        - confirmacion.user_input | default('') | lower != 'si'
+
+    - name: Marcar el inicio
+      ansible.builtin.set_fact:
+        inicio: "{{ lookup('pipe', 'date +%s') }}"
+
+    - name: Borrar las tablas actuales
+      ansible.builtin.command: "{{ drush }} --uri={{ site_uri }} sql:drop -y"
+      args:
+        chdir: "{{ proyecto_dir }}"
+      changed_when: true
+
+    # drush descomprime el archivo en su lugar; se trabaja sobre una copia
+    # para que el respaldo original quede intacto.
+    - name: Copiar el respaldo para cargarlo
+      ansible.builtin.copy:
+        src: "{{ proyecto_dir }}/backups/{{ respaldo }}/{{ site_dir }}.sql.gz"
+        dest: "{{ proyecto_dir }}/backups/{{ respaldo }}/cargando-{{ site_dir }}.sql.gz"
+        remote_src: true
+        mode: "0640"
+
+    - name: Cargar el respaldo de la base de datos
+      ansible.builtin.command: >-
+        {{ drush }} --uri={{ site_uri }} sql:query --file-delete
+        --file={{ ruta_drush_proyecto }}/backups/{{ respaldo }}/cargando-{{ site_dir }}.sql.gz
+      args:
+        chdir: "{{ proyecto_dir }}"
+      changed_when: true
+
+    - name: Revisar si hay respaldo de archivos
+      ansible.builtin.stat:
+        path: "{{ proyecto_dir }}/backups/{{ respaldo }}/{{ site_dir }}-files.tar.gz"
+      register: archivos
+
+    - name: Restaurar los archivos públicos
+      ansible.builtin.command: >-
+        tar xzf {{ proyecto_dir }}/backups/{{ respaldo }}/{{ site_dir }}-files.tar.gz
+        -C {{ proyecto_dir }}/web/sites/{{ site_dir }}
+      changed_when: true
+      when: archivos.stat.exists
+
+    - name: Reconstruir la caché y salir de mantenimiento
+      ansible.builtin.command: "{{ item }}"
+      args:
+        chdir: "{{ proyecto_dir }}"
+      loop:
+        - "{{ drush }} --uri={{ site_uri }} cache:rebuild"
+        - "{{ drush }} --uri={{ site_uri }} state:set system.maintenance_mode 0 --input-format=integer"
+      changed_when: true
+
+    - name: Prueba de humo
+      ansible.builtin.uri:
+        url: "{{ site_uri }}"
+        validate_certs: "{{ validar_certificados }}"
+        status_code: 200
+
+    - name: Tiempo de restauración
+      ansible.builtin.debug:
+        msg: >-
+          {{ inventory_hostname }} restaurado desde {{ respaldo }} en
+          {{ lookup('pipe', 'date +%s') | int - inicio | int }} segundos.

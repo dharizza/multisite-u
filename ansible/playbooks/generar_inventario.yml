@@ -1,0 +1,100 @@
+---
+# Genera inventario/local/hosts.yml con un host por subsitio, a partir de
+# web/sites/sites.php y del sitio por defecto de DDEV.
+#
+#   ansible-playbook playbooks/generar_inventario.yml
+
+- name: Generar el inventario local a partir de sites.php
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    proyecto_dir: "{{ (playbook_dir ~ '/../..') | realpath }}"
+    sites_php: "{{ proyecto_dir }}/web/sites/sites.php"
+    patron_sites: >-
+      \$sites\[\s*['"]([^'"]+)['"]\s*\]\s*=\s*['"]([^'"]+)['"]
+
+  tasks:
+    - name: Verificar que estamos en un codebase de Drupal
+      ansible.builtin.stat:
+        path: "{{ proyecto_dir }}/web/sites"
+      register: carpeta_sites
+
+    - name: Detener si no se encuentra web/sites
+      ansible.builtin.assert:
+        that: carpeta_sites.stat.exists
+        fail_msg: >-
+          No se encontró {{ proyecto_dir }}/web/sites. Copie la carpeta ansible/
+          en la raíz del codebase del curso.
+
+    - name: Leer la URL principal del proyecto DDEV
+      ansible.builtin.command: ddev describe -j
+      args:
+        chdir: "{{ proyecto_dir }}"
+      register: ddev_describe
+      changed_when: false
+
+    - name: Guardar la URL del sitio por defecto
+      ansible.builtin.set_fact:
+        url_default: "{{ (ddev_describe.stdout_lines | select('search', 'primary_url') | first | from_json).raw.primary_url }}"
+
+    - name: Revisar si existe sites.php
+      ansible.builtin.stat:
+        path: "{{ sites_php }}"
+      register: sites_php_stat
+
+    - name: Leer sites.php
+      ansible.builtin.slurp:
+        src: "{{ sites_php }}"
+      register: sites_php_raw
+      when: sites_php_stat.stat.exists
+
+    - name: Extraer los pares (hostname, carpeta) sin tomar en cuenta los comentarios
+      ansible.builtin.set_fact:
+        pares: >-
+          {{ (sites_php_raw.content | b64decode)
+             | regex_replace('(?s)/\*.*?\*/', '')
+             | regex_replace('(?m)^\s*(//|#).*$', '')
+             | regex_findall(patron_sites) }}
+      when: sites_php_stat.stat.exists
+
+    - name: Elegir un hostname por carpeta (preferir *.ddev.site)
+      ansible.builtin.set_fact:
+        subsitios: >-
+          {{ subsitios | default({}) | combine({
+               item: {
+                 'site_dir': item,
+                 'site_uri': 'https://' ~ (
+                   (pares | selectattr(1, 'equalto', item) | map('first')
+                          | select('search', '\.ddev\.site$') | list)
+                   + (pares | selectattr(1, 'equalto', item) | map('first') | list)
+                 ) | first
+               }
+             }) }}
+      loop: "{{ (pares | default([])) | map(attribute=1) | unique | list }}"
+
+    - name: Revisar si el sitio por defecto está instalado
+      ansible.builtin.stat:
+        path: "{{ proyecto_dir }}/web/sites/default/settings.php"
+      register: default_settings
+
+    - name: Agregar el sitio por defecto
+      ansible.builtin.set_fact:
+        subsitios: >-
+          {{ subsitios | default({}) | combine({
+               'default': {'site_dir': 'default', 'site_uri': url_default}
+             }) }}
+      when: default_settings.stat.exists
+
+    - name: Escribir inventario/local/hosts.yml
+      ansible.builtin.template:
+        src: ../plantillas/hosts.yml.j2
+        dest: "{{ playbook_dir }}/../inventario/local/hosts.yml"
+        mode: "0644"
+
+    - name: Mostrar los subsitios encontrados
+      ansible.builtin.debug:
+        msg: "{{ item.key | regex_replace('[^A-Za-z0-9_]', '_') }} -> {{ item.value.site_uri }}"
+      loop: "{{ subsitios | default({}) | dict2items }}"
+      loop_control:
+        label: "{{ item.key }}"

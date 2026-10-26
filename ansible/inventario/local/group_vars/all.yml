@@ -1,0 +1,26 @@
+# Variables del entorno LOCAL (DDEV).
+# Cada subsitio es un "host" de Ansible, pero todos corren en esta máquina.
+ansible_connection: local
+ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+entorno: local
+
+# Raíz del codebase: la carpeta que contiene ansible/. No hace falta cambiarla.
+proyecto_dir: "{{ (playbook_dir ~ '/../..') | realpath }}"
+
+# Cómo se ejecutan drush y composer en este entorno.
+drush: ddev drush
+composer: ddev composer
+composer_install_opciones: --no-interaction
+
+# Ruta del proyecto tal como la ve drush (dentro del contenedor de DDEV).
+ruta_drush_proyecto: /var/www/html
+
+# En local no se hace git pull: cada quien maneja su rama.
+actualizar_codigo: false
+
+# Los certificados de DDEV (mkcert) no siempre son de confianza para Python.
+validar_certificados: false
+
+# Respaldos: cuántas carpetas de respaldo conservar.
+respaldos_a_conservar: 7

@@ -1,0 +1,13 @@
+# GENERADO por playbooks/generar_inventario.yml. No lo edite a mano:
+# vuelva a ejecutar ese playbook si cambia sites.php.
+all:
+  children:
+    subsitios:
+      hosts:
+{% for dir, s in (subsitios | default({})) | dictsort %}
+        {{ dir | regex_replace('[^A-Za-z0-9_]', '_') }}:
+          site_dir: "{{ s.site_dir }}"
+          site_uri: "{{ s.site_uri }}"
+{% else %}
+        {}
+{% endfor %}
