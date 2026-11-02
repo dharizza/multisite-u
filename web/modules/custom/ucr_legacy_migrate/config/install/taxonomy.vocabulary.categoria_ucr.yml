@@ -1,0 +1,11 @@
+langcode: es
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucr_legacy_migrate
+name: 'Categoría de noticia (UCR)'
+vid: categoria_ucr
+description: 'Categorías migradas del sitio heredado.'
+weight: 0
+new_revision: false

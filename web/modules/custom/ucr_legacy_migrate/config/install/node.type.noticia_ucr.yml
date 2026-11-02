@@ -1,0 +1,13 @@
+langcode: es
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucr_legacy_migrate
+name: 'Noticia (migrada)'
+type: noticia_ucr
+description: 'Noticias importadas del sitio heredado.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

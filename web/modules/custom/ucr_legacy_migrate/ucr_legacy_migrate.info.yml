@@ -1,0 +1,11 @@
+name: 'UCR Legacy Migrate (ejercicio de migración)'
+type: module
+description: 'Migra noticias y categorías de un sitio UCR heredado (exportadas a JSON) a un subsitio nuevo. Ejercicio de la Clase 4.'
+core_version_requirement: ^11
+package: 'UCR Training'
+dependencies:
+  - drupal:filter
+  - drupal:migrate
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:text

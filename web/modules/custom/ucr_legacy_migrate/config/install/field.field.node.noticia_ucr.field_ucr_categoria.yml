@@ -1,0 +1,30 @@
+langcode: es
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucr_legacy_migrate
+  config:
+    - field.storage.node.field_ucr_categoria
+    - node.type.noticia_ucr
+    - taxonomy.vocabulary.categoria_ucr
+id: node.noticia_ucr.field_ucr_categoria
+field_name: field_ucr_categoria
+entity_type: node
+bundle: noticia_ucr
+label: Categoría
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categoria_ucr: categoria_ucr
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+field_type: entity_reference

@@ -1,0 +1,6 @@
+[
+  {"id": 1, "nombre": "Investigación", "descripcion": "Proyectos y resultados de investigación."},
+  {"id": 2, "nombre": "Vida estudiantil", "descripcion": "Actividades y servicios para estudiantes."},
+  {"id": 3, "nombre": "Acción social", "descripcion": "Trabajo comunal y proyectos con comunidades."},
+  {"id": 4, "nombre": "Avisos", "descripcion": "Comunicados y avisos administrativos."}
+]
