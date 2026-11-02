@@ -59,3 +59,4 @@
 $sites['unidad-a.ddev.site'] = 'sitio-a';
 $sites['unidad-b.ddev.site'] = 'sitio-b';
 $sites['unidad-c.ddev.site'] = 'sitio-c';
+$sites['prueba.multisite.ddev.site'] = 'prueba';
