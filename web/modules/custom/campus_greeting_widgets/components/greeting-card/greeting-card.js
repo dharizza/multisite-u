@@ -5,9 +5,11 @@
 ((Drupal, once) => {
   Drupal.behaviors.greetingCardLike = {
     attach(context) {
-      once('greeting-like', '[data-greeting-like]', context).forEach((el) => {
-        el.addEventListener('click', () => {
-          el.classList.toggle('is-liked');
+      once('greeting-like', '[data-greeting-like]', context).forEach((button) => {
+        button.addEventListener('click', () => {
+          // Hallazgo A4: el lector de pantalla anuncia el estado.
+          const pressed = button.getAttribute('aria-pressed') === 'true';
+          button.setAttribute('aria-pressed', String(!pressed));
         });
       });
     },

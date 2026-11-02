@@ -8,7 +8,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -20,14 +20,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   admin_label: new TranslatableMarkup('Últimos saludos del campus'),
   category: new TranslatableMarkup('UCR Training'),
 )]
-class LatestGreetingsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+class LatestGreetingsBlock extends BlockBase implements ContainerFactoryPluginInterface, TrustedCallbackInterface {
 
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     protected Connection $database,
-    protected AccountInterface $currentUser,
     protected ModuleExtensionList $moduleList,
     protected FileUrlGeneratorInterface $fileUrlGenerator,
   ) {
@@ -40,7 +39,6 @@ class LatestGreetingsBlock extends BlockBase implements ContainerFactoryPluginIn
       $plugin_id,
       $plugin_definition,
       $container->get('database'),
-      $container->get('current_user'),
       $container->get('extension.list.module'),
       $container->get('file_url_generator'),
     );
@@ -50,14 +48,12 @@ class LatestGreetingsBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function build(): array {
-    // Total de saludos recibidos.
-    $all = $this->database->select('campus_greeting_feedback', 'f')
-      ->fields('f')
+    // Hallazgo P4: contar en la base de datos, no cargando todas las filas.
+    $total = (int) $this->database->select('campus_greeting_feedback', 'f')
+      ->countQuery()
       ->execute()
-      ->fetchAll();
-    $total = count($all);
+      ->fetchField();
 
-    // Últimos 5 saludos.
     $items = $this->database->select('campus_greeting_feedback', 'f')
       ->fields('f', ['id', 'name', 'message', 'created'])
       ->orderBy('created', 'DESC')
@@ -69,16 +65,43 @@ class LatestGreetingsBlock extends BlockBase implements ContainerFactoryPluginIn
 
     return [
       '#theme' => 'campus_greeting_widgets_latest',
-      '#welcome' => $this->t('Hola, @name', ['@name' => $this->currentUser->getDisplayName()]),
+      // Hallazgo P3: la parte personal va en un placeholder (lazy builder).
+      // Así la lista se guarda en caché una sola vez para todos, y solo el
+      // saludo personal se calcula por usuario (BigPipe lo envía después).
+      '#welcome' => [
+        '#lazy_builder' => [static::class . '::buildWelcome', []],
+        '#create_placeholder' => TRUE,
+      ],
       '#items' => $items,
       '#total' => $total,
       '#icon_url' => $this->fileUrlGenerator->generateString($icon_path),
-      // El bloque no se actualizaba cuando alguien enviaba un saludo nuevo,
-      // así que se desactivó la caché.
+      // Hallazgos P1 y P2: sin max-age 0. El tag se invalida en
+      // FeedbackForm::submitForm() cada vez que llega un saludo nuevo.
       '#cache' => [
         'tags' => ['campus_greeting_feedback_list'],
       ],
     ];
+  }
+
+  /**
+   * Lazy builder: saludo personal para el usuario actual.
+   */
+  public static function buildWelcome(): array {
+    return [
+      '#markup' => new TranslatableMarkup('Hola, @name', [
+        '@name' => \Drupal::currentUser()->getDisplayName(),
+      ]),
+      '#cache' => [
+        'contexts' => ['user'],
+      ],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks(): array {
+    return ['buildWelcome'];
   }
 
 }
