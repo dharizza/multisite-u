@@ -4,14 +4,17 @@
  * Bloque "Últimos saludos del campus".
  *
  * Variables:
- * - welcome: saludo personal para el usuario actual.
+ * - welcome: saludo personal para el usuario actual (placeholder).
  * - items: últimos saludos (id, name, message, created).
  * - total: cantidad total de saludos.
  * - icon_url: URL del ícono de saludo.
+ *
+ * Hallazgo A5: el saludo personal no es un encabezado; los nombres de las
+ * tarjetas usan h3 (el título del bloque es h2).
  */
 #}
 <div class="campus-greeting-widgets">
-  <h5 class="campus-greeting-widgets__welcome">{{ welcome }}</h5>
+  <p class="campus-greeting-widgets__welcome">{{ welcome }}</p>
   <p class="campus-greeting-widgets__total">{{ 'Saludos recibidos: @total'|t({'@total': total}) }}</p>
 
   {% for item in items %}
@@ -19,11 +22,14 @@
       name: item.name,
       message: item.message,
       date: item.created|format_date('short'),
+      datetime: item.created|format_date('custom', 'c'),
       icon_url: icon_url,
     }, with_context = false) }}
   {% endfor %}
 
+  {# Hallazgo A2: el enlace tiene texto visible; el ícono es decorativo. #}
   <a href="{{ path('campus_greeting_feedback.form') }}" class="campus-greeting-widgets__add">
-    <img src="{{ icon_url }}" width="24" height="24">
+    <img src="{{ icon_url }}" alt="" width="24" height="24">
+    {{ 'Enviar un saludo'|t }}
   </a>
 </div>

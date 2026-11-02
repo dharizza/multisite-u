@@ -21,6 +21,9 @@ props:
     date:
       type: string
       title: Fecha
+    datetime:
+      type: string
+      title: Fecha en formato ISO 8601
     icon_url:
       type: string
       title: URL del ícono

@@ -15,22 +15,35 @@
   margin: 0;
 }
 
+/* Hallazgo A3: contraste 7:1 sobre blanco (antes #a6a6a6, 2.4:1). */
 .greeting-card__date {
-  color: #a6a6a6;
-  font-size: 0.8rem;
+  color: #595959;
+  font-size: 0.875rem;
 }
 
+/* Hallazgo A6: área de toque de al menos 24x24 px (WCAG 2.2, 2.5.8). */
 .greeting-card__like {
-  display: inline-block;
-  padding: 1px 4px;
-  font-size: 0.75rem;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 0.875rem;
+  color: #2b2f33;
+  background: #fff;
+  border: 1px solid #2b2f33;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.greeting-card__like.is-liked {
-  color: #0e7c7b;
+/* Hallazgo A7: el estado no depende solo del color (relleno + aria-pressed). */
+.greeting-card__like[aria-pressed="true"] {
+  color: #fff;
+  background: #0e7c7b;
+  border-color: #0e7c7b;
 }
 
-.greeting-card__like:focus {
-  outline: none;
+/* Hallazgo A6: foco siempre visible al navegar con teclado (2.4.7). */
+.greeting-card__like:focus-visible {
+  outline: 3px solid #0e7c7b;
+  outline-offset: 2px;
 }

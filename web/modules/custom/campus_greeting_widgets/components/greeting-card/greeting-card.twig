@@ -1,7 +1,17 @@
-<div class="greeting-card">
-  <img alt="" src="{{ icon_url }}" class="greeting-card__icon" width="32" height="32">
-  <h5 class="greeting-card__name">{{ name }}</h5>
-  <span class="greeting-card__date">{{ date }}</span>
+{#
+  Hallazgos corregidos:
+  - A1: el ícono es decorativo, alt vacío.
+  - A4: "Me gusta" es un <button> (teclado y lector de pantalla) con aria-pressed.
+  - A5: h3 en lugar de h5.
+#}
+<article class="greeting-card">
+  <img src="{{ icon_url }}" class="greeting-card__icon" alt="" width="32" height="32">
+  <h3 class="greeting-card__name">{{ name }}</h3>
+  {% if date %}
+    <time class="greeting-card__date"{% if datetime %} datetime="{{ datetime }}"{% endif %}>{{ date }}</time>
+  {% endif %}
   <p class="greeting-card__message">{{ message }}</p>
-  <div class="greeting-card__like" data-greeting-like>👍 {{ 'Me gusta'|t }}</div>
-</div>
+  <button type="button" class="greeting-card__like" aria-pressed="false" data-greeting-like>
+    <span aria-hidden="true">👍</span> {{ 'Me gusta'|t }}
+  </button>
+</article>
