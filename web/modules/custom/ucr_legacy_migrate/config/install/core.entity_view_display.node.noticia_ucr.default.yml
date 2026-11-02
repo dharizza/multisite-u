@@ -1,0 +1,38 @@
+langcode: es
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucr_legacy_migrate
+  config:
+    - field.field.node.noticia_ucr.field_ucr_categoria
+    - field.field.node.noticia_ucr.field_ucr_cuerpo
+    - node.type.noticia_ucr
+  module:
+    - text
+id: node.noticia_ucr.default
+targetEntityType: node
+bundle: noticia_ucr
+mode: default
+content:
+  field_ucr_categoria:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_ucr_cuerpo:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

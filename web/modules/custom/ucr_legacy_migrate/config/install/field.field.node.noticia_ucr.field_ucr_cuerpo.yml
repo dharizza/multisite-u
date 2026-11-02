@@ -1,0 +1,24 @@
+langcode: es
+status: true
+dependencies:
+  enforced:
+    module:
+      - ucr_legacy_migrate
+  config:
+    - field.storage.node.field_ucr_cuerpo
+    - node.type.noticia_ucr
+  module:
+    - text
+id: node.noticia_ucr.field_ucr_cuerpo
+field_name: field_ucr_cuerpo
+entity_type: node
+bundle: noticia_ucr
+label: Cuerpo
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

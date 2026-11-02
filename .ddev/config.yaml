@@ -5,9 +5,10 @@ php_version: "8.4"
 webserver_type: nginx-fpm
 xdebug_enabled: false
 additional_hostnames:
-  - unidad-a
-  - unidad-b
-  - unidad-c
+    - unidad-a
+    - unidad-b
+    - unidad-c
+    - prueba.multisite
 additional_fqdns: []
 database:
     type: mariadb

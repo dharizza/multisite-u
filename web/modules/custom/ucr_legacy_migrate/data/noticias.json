@@ -1,0 +1,66 @@
+[
+  {
+    "id": 101,
+    "titulo": "Laboratorio inaugura equipo de microscopía",
+    "fecha": "2023-03-15 10:30:00",
+    "categoria_id": 1,
+    "publicada": true,
+    "cuerpo": "<p>El laboratorio de la facultad puso en funcionamiento un nuevo equipo de microscopía que estará disponible para proyectos de grado y de posgrado.</p><p>Las solicitudes de uso se reciben por medio del formulario de la unidad.</p>"
+  },
+  {
+    "id": 102,
+    "titulo": "Matrícula de cursos de verano",
+    "fecha": "2023-11-20 08:00:00",
+    "categoria_id": 4,
+    "publicada": true,
+    "cuerpo": "<p style=\"color:#ff0000; font-size:18px\"><b>IMPORTANTE:</b> la matrícula de cursos de verano se realizará del 4 al 8 de diciembre.</p><p><font face=\"Arial\">Consulte la oferta en la sección de horarios.</font><br><br></p>"
+  },
+  {
+    "id": 103,
+    "titulo": "Estudiantes visitan comunidades costeras",
+    "fecha": "2024-02-09 14:15:00",
+    "categoria_id": 3,
+    "publicada": true,
+    "cuerpo": "<p>Un grupo de estudiantes del trabajo comunal visitó comunidades costeras para acompañar talleres de manejo de residuos.</p><p><img src=\"/sites/default/files/legado/gira-costera.jpg\" width=\"600\"></p>"
+  },
+  {
+    "id": 104,
+    "titulo": "Feria de bienvenida",
+    "fecha": "2024-03-04 09:00:00",
+    "categoria_id": 2,
+    "publicada": true,
+    "cuerpo": "<p>La feria de bienvenida reúne a las asociaciones estudiantiles y a los servicios de apoyo. Más detalles en <a href=\"/noticias/45\">la nota del año pasado</a>.</p>"
+  },
+  {
+    "id": 105,
+    "titulo": "",
+    "fecha": "2024-04-01 12:00:00",
+    "categoria_id": 4,
+    "publicada": false,
+    "cuerpo": "<p>Borrador sin título que quedó en el sitio viejo.</p>"
+  },
+  {
+    "id": 106,
+    "titulo": "Resultados del proyecto de agua potable",
+    "fecha": "2024-05-15 12:00:00",
+    "categoria_id": 1,
+    "publicada": true,
+    "cuerpo": "<p>El proyecto presentó sus resultados finales ante las municipalidades participantes.</p>"
+  },
+  {
+    "id": 107,
+    "titulo": "Cierre temporal de la biblioteca",
+    "fecha": "2024-06-10 07:30:00",
+    "categoria_id": 99,
+    "publicada": true,
+    "cuerpo": "<p>La biblioteca permanecerá cerrada por mantenimiento durante la semana del 17 de junio.</p>"
+  },
+  {
+    "id": 108,
+    "titulo": "Convocatoria a fondos de investigación",
+    "fecha": "2024-08-22 16:45:00",
+    "categoria_id": 1,
+    "publicada": false,
+    "cuerpo": "<p>Se abre la convocatoria anual a fondos concursables de investigación. Las bases se publicarán próximamente.</p>"
+  }
+]

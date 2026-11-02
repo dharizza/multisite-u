@@ -1,0 +1,59 @@
+# Migración 2: noticias del sitio heredado → nodos "Noticia (migrada)".
+id: ucr_noticias
+label: 'UCR legado: noticias'
+migration_tags:
+  - 'UCR legado'
+
+source:
+  plugin: ucr_json_file
+  module: ucr_legacy_migrate
+  path: data/noticias.json
+  ids:
+    id:
+      type: integer
+  constants:
+    # Formato de texto para el cuerpo. Debe existir en el subsitio.
+    formato: basic_html
+
+process:
+  type:
+    plugin: default_value
+    default_value: noticia_ucr
+
+  # Sin título no hay noticia: la fila se omite y queda un mensaje.
+  title:
+    plugin: skip_on_empty
+    method: row
+    source: titulo
+    message: 'Noticia sin título'
+
+  # La fecha del sitio viejo viene como texto en hora de Costa Rica.
+  created:
+    plugin: format_date
+    source: fecha
+    from_format: 'Y-m-d H:i:s'
+    to_format: 'U'
+    from_timezone: 'America/Costa_Rica'
+  changed: '@created'
+
+  status: publicada
+
+  field_ucr_cuerpo/value: cuerpo
+  field_ucr_cuerpo/format: constants/formato
+
+  # Busca el término que creó la migración de categorías.
+  field_ucr_categoria:
+    plugin: migration_lookup
+    migration: ucr_categorias
+    source: categoria_id
+
+  uid:
+    plugin: default_value
+    default_value: 1
+
+destination:
+  plugin: 'entity:node'
+
+migration_dependencies:
+  required:
+    - ucr_categorias

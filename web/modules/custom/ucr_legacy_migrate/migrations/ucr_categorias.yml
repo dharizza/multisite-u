@@ -1,0 +1,24 @@
+# Migración 1: categorías del sitio heredado → términos de taxonomía.
+id: ucr_categorias
+label: 'UCR legado: categorías'
+migration_tags:
+  - 'UCR legado'
+
+source:
+  plugin: ucr_json_file
+  module: ucr_legacy_migrate
+  path: data/categorias.json
+  ids:
+    id:
+      type: integer
+
+process:
+  # El campo de la izquierda es el destino; el de la derecha, la fuente.
+  name: nombre
+  description: descripcion
+  vid:
+    plugin: default_value
+    default_value: categoria_ucr
+
+destination:
+  plugin: 'entity:taxonomy_term'
